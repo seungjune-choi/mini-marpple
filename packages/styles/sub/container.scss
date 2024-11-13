@@ -1,0 +1,25 @@
+@import 'mixin';
+
+.container {
+  @include flex(center, center);
+  height: 100vh;
+  width: 100%;
+
+  &.vertical {
+    @include flex(center, center, column);
+  }
+
+  &.horizontal {
+    @include flex(center, center, row);
+  }
+}
+
+.form {
+  @include flex(center, center, column);
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #007bff;
+}

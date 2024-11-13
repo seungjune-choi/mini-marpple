@@ -1,0 +1,45 @@
+$text-field-border-color: #ccc;
+$text-field-focus-color: #3f51b5;
+$text-field-label-color: #757575;
+$text-field-background-color: #fff;
+
+.text-field-container {
+  position: relative;
+  margin: 20px 0;
+
+  .text-field-input {
+    width: 100%;
+    padding: 16px 12px 12px;
+    font-size: 16px;
+    border: 1px solid $text-field-border-color;
+    border-radius: 4px;
+    background-color: $text-field-background-color;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+
+    &:focus {
+      border-color: $text-field-focus-color;
+      box-shadow: 0 0 0 2px $text-field-focus-color;
+    }
+
+    &:focus + .text-field-label,
+    &:not(:placeholder-shown) + .text-field-label {
+      top: -2px;
+      font-size: 12px;
+      color: $text-field-focus-color;
+      background-color: $text-field-background-color;
+      padding: 0 4px;
+    }
+  }
+
+  .text-field-label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 12px;
+    transition: all 0.2s ease;
+    font-size: 16px;
+    color: $text-field-label-color;
+    pointer-events: none;
+  }
+}

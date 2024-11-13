@@ -1,0 +1,42 @@
+{
+  "name": "mini-marpple-backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node dist/src/main.js",
+    "start:dev": "NODE_ENV=development ts-node-dev --transpile-only --respawn -r tsconfig-paths/register --trace-warnings --trace-uncaught -- ./src/main.ts",
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "test": "jest --config jest.config.js",
+    "prebuild": "rm -rf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "@js-joda/core": "^5.6.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "connect-redis": "^7.1.1",
+    "express": "5.0.0",
+    "express-session": "^1.18.1",
+    "fxsql": "^1.6.2",
+    "ioredis": "^5.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "1.4.5-lts.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "redlock": "5.0.0-beta.2",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.8.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^20.12.7",
+    "@types/passport": "^1.0.17",
+    "@types/passport-local": "^1.0.38",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

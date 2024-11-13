@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e3435f45-4913-4f2d-9fd0-9ff4f5ba842b" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/apps/backend/libs/decorators/cacheable.decorator.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/conflict.exception.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/forbidden.exception.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/unprecessable-entity.exception.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/libs/lock/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/libs/lock/lock.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/libs/middlewares/auth.middleware.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/libs/redis/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/libs/redis/redis.client.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/cart-item.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/cart.entity.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/cart.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/inventory-reservation.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/order-item.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/order-status.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/order.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/payment-status.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/payment.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/product.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/target-user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/core/user.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/order.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/payment.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/cart-item.scheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/cart.scheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/find-one-cart-association.scheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/find-one-order-association.scheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/order-item.scheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/order.scheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/payment.scheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/user.scheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/presentation/cart.controller.v1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/presentation/order.controller.v1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/presentation/payment.controller.v1.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/usecase/auth.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/usecase/cart.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/usecase/order.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/usecase/payment.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/backend/src/usecase/shipping-fee-calculator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/database/dataSource.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/database/dataSource.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/database/dataSource.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/database/dataSource.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/decorators/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/decorators/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/decorators/rest/param.decorator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/decorators/rest/param.decorator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/bad-request.exception.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/bad-request.exception.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/http.exception.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/http.exception.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/internal-server-error.exception.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/internal-server-error.exception.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/unauthorized.exception.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/exceptions/http/unauthorized.exception.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/middlewares/body-validation.middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/middlewares/body-validation.middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/middlewares/http-exception.filter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/middlewares/http-exception.filter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/middlewares/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/middlewares/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/rest/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/rest/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/libs/rest/response.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/libs/rest/response.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/entities/base.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/core/base.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/entities/category.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/core/category.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/entities/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/core/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/entities/product-image.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/core/product-image.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/entities/product.entity.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/persistence/category.repository.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/persistence/category.repository.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/persistence/category.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/persistence/category.repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/persistence/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/persistence/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/persistence/product-image.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/persistence/product-image.repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/persistence/product.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/persistence/product.repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/persistence/scheme/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/persistence/user.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/persistence/user.repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/presentation/file.controller.v1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/presentation/file.controller.v1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/presentation/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/presentation/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/presentation/product.controller.v1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/presentation/product.controller.v1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/presentation/user.controller.v1.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/presentation/user.controller.v1.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/dto/request/create-product.request.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/dto/request/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/dto/request/sign-in.request.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/dto/request/update-product.request.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/dto/response/find-one-product.response.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/dto/response/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/usecase/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/product-image.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/usecase/product-image.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/product.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/usecase/product.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/backend/src/usecase/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/backend/src/usecase/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/rune.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/rune.config.cjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/src/components/dummy.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/src/components/input/input-validator.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/src/components/input/input.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/src/components/input/input.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/src/components/input/input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/src/components/input/input.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/frontend/src/pages/main/main.page.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/frontend/src/pages/main/main.page.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="tsconfig.json" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;seungjune-choi&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:seungjune-choi/mini-marpple.git&quot;,
+    &quot;accountId&quot;: &quot;cde77363-1738-4c12-a2e2-4b4a8bdf58ac&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/fixture.sql" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2oKI55tIwNMSH05u8y1JTkQmntA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/june/workspace/mini-marpple&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;npm.backend &gt; test.executor&quot;: &quot;Run&quot;,
+    &quot;prettier.import.notification.dismissed&quot;: &quot;true&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/june/workspace/mini-marpple/node_modules/prettier&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/june/workspace/mini-marpple/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/frontend/public" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/backend/src/usecase" />
+      <recent name="$PROJECT_DIR$/apps/backend/src/presentation/dto/request" />
+      <recent name="$PROJECT_DIR$/apps/backend/src/presentation/dto/response" />
+      <recent name="$PROJECT_DIR$/apps/backend" />
+      <recent name="$PROJECT_DIR$/apps/frontend/src/templates/main" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="backend &gt; test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/apps/backend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.backend &gt; test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23726.96" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="e3435f45-4913-4f2d-9fd0-9ff4f5ba842b" name="변경" comment="" />
+      <created>1730611653306</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730611653306</updated>
+      <workItem from="1730611654343" duration="6278000" />
+      <workItem from="1730619644383" duration="1184000" />
+      <workItem from="1730683111308" duration="37272000" />
+      <workItem from="1730768041574" duration="30767000" />
+      <workItem from="1730854531059" duration="39373000" />
+      <workItem from="1730941837252" duration="35686000" />
+      <workItem from="1731027838979" duration="30565000" />
+      <workItem from="1731285482923" duration="38336000" />
+      <workItem from="1731372723991" duration="38757000" />
+      <workItem from="1731461735789" duration="5253000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/apps/backend/jest.config.js</url>
+          <line>6</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/apps/backend/src/persistence/product.repository.ts</url>
+          <line>35</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/apps/backend/src/persistence/scheme/find-one-cart-association.scheme.ts</url>
+          <line>10</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/apps/backend/src/persistence/product.repository.ts</url>
+          <line>131</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

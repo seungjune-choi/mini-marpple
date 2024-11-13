@@ -1,0 +1,71 @@
+.button {
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &.text {
+    background-color: transparent;
+    color: #1976d2;
+
+    &:hover {
+      background-color: rgba(25, 118, 210, 0.04);
+    }
+  }
+
+  &.outlined {
+    background-color: transparent;
+    color: #1976d2;
+    border: 1px solid rgba(25, 118, 210, 0.5);
+
+    &:hover {
+      background-color: rgba(25, 118, 210, 0.04);
+    }
+  }
+
+  &.contained {
+    background-color: #1976d2;
+    color: #fff;
+
+    &:hover {
+      background-color: #1565c0;
+    }
+  }
+
+  &.small {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+
+  &.medium {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
+
+  &.large {
+    font-size: 15px;
+    padding: 8px 22px;
+  }
+
+  &.default {
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  &.primary {
+    color: #1976d2;
+  }
+
+  &.secondary {
+    color: #dc004e;
+  }
+
+  &:disabled {
+    color: rgba(0, 0, 0, 0.26);
+    background-color: rgba(0, 0, 0, 0.12);
+    cursor: default;
+    pointer-events: none;
+    border: none;
+  }
+}
