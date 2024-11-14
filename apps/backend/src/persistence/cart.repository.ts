@@ -13,7 +13,13 @@ export class CartRepository {
    * if cart has an id, update it in the database else create a new cart
    */
   async save(cart: Cart, tx?: TransactionClient): Promise<Cart> {
-    return cart.id ? this.update(cart, tx) : this.create(cart, tx);
+    if (tx) {
+      return cart.id ? this.update(cart, tx) : this.create(cart, tx);
+    } else {
+      return this.dataSource.$transaction(async (tx) => {
+        return cart.id ? this.update(cart, tx) : this.create(cart, tx);
+      });
+    }
   }
 
   async create(cart: Cart, tx?: TransactionClient): Promise<Cart> {

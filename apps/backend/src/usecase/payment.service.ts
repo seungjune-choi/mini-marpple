@@ -61,7 +61,7 @@ export class PaymentService {
         const updatedOrder = await this.orderRepository.save(order.complete(), tx);
         this.logger.info(`Order ${updatedOrder.id} is completed`);
 
-        // 상품 재고 변경
+        // TODO: Order 엔티티 로직으로 수정 상품 재고 변경
         const products = pipe(
           order.items,
           map((item) => item.product.decrementStock(item.quantity)),
