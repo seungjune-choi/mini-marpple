@@ -5,6 +5,7 @@ import { DATA_SOURCE, DataSource } from '@libs/database';
 import { container } from 'tsyringe';
 import { httpExceptionFilter, initializeSession, loggerMiddleware } from '@libs/middlewares';
 import { LOCK, redlock } from '@libs/lock/lock';
+import cors from 'cors';
 
 async function bootstrap() {
   const app = express();
@@ -31,15 +32,20 @@ async function initialize(app: Express) {
   container.register(LOCK, { useValue: redlock });
 
   // set up middlewares
+  app.use(
+    cors({
+      origin: 'http://localhost:3001',
+      credentials: true,
+    }),
+  );
   initializeSession(app);
   app.use(loggerMiddleware);
 
-  // import controllers and presentation
+  // set up router
   await require('./app.controller');
   await require('./presentation');
   await require('../libs/redis');
 
-  // set up router
   app.use(appRouter);
 
   // set up global exception filter

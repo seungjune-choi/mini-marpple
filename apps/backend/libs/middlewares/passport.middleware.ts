@@ -26,6 +26,7 @@ export function initializeSession(app: Router) {
       cookie: {
         httpOnly: true,
         secure: false,
+        sameSite: 'lax',
         maxAge: 1000 * 60 * 60 * 24 * 7,
       },
     } as session.SessionOptions),
@@ -61,8 +62,7 @@ export function initializeSession(app: Router) {
             FROM 
                 users 
             WHERE 
-                email = ${email}`
-            .then((res) => res[0]);
+                email = ${email}`.then((res) => res[0]);
 
           if (!user) {
             return done(null, false, { message: '존재하지 않는 이메일입니다.' });
