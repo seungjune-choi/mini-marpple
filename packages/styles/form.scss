@@ -1,0 +1,20 @@
+.form-group {
+  margin-top: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.form-control {
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

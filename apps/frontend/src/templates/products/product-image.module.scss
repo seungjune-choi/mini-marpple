@@ -1,0 +1,28 @@
+.img {
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.primary-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  z-index: 1;
+  pointer-events: none;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.product-image-container {
+  position: relative;
+}
