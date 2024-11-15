@@ -1,19 +1,17 @@
-import { View, html, on, type Html } from 'rune-ts';
+import { View, html, on } from 'rune-ts';
 import style from './carousel.module.scss';
 
-interface CarouselProps {
-  children: Html[];
-  width?: string;
-  height?: string;
+interface CarouselProps<T extends View<{ id: number | string }>> {
+  children: T[];
   autoPlay?: boolean;
   interval?: number;
 }
 
-export class Carousel extends View<CarouselProps> {
+export class Carousel<T extends { id: number | string }, IV extends View<T>> extends View<CarouselProps<IV>> {
   private _currentIndex = 0;
   private intervalId: NodeJS.Timeout | null = null;
 
-  constructor(props: CarouselProps) {
+  constructor(props: CarouselProps<IV>) {
     super(props);
     this.initAutoPlay();
   }
@@ -54,7 +52,7 @@ export class Carousel extends View<CarouselProps> {
     return this._currentIndex;
   }
 
-  addChild(child: Html[]) {
+  addChild(child: IV[]) {
     this.data.children = [...this.data.children, ...child];
     this.redraw();
   }
