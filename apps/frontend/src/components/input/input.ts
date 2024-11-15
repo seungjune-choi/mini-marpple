@@ -67,14 +67,11 @@ export class Input extends View<InputProps> {
     }
   }
 
-  @on('focusout', `.${style['input-field']}`)
+  @on('focusin', `.${style['input-field']}`)
   _handleFocus(e) {
-    console.log(e.target);
+    const input = e.target as HTMLInputElement;
+    input.classList.remove(style['input-error']);
+    const errorMessage = this.element().querySelector(`#${this.data.name}-error-message`)! as HTMLParagraphElement;
+    errorMessage.textContent = '';
   }
-
-  // protected override onRender() {
-  //   this.element()
-  //     .querySelector('input')!
-  //     .addEventListener('focus', (e) => console.log(e));
-  // }
 }
