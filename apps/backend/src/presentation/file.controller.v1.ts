@@ -3,6 +3,7 @@ import multer from 'multer';
 import * as fs from 'fs';
 import type { Request, Response } from 'express';
 import { ProductImageService } from '@backend/usecase';
+import { ResponseEntity } from '@libs/rest';
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -36,7 +37,7 @@ export class FileControllerV1 {
   public async imageUpload(@Req() req: Request) {
     const files = await this.#uploadFiles(req);
     const imagePaths = files.map((file) => file.path);
-    await this.imageService.create(imagePaths);
+    return await this.imageService.create(imagePaths).then(ResponseEntity.created);
   }
 
   // TODO: service logic 으로 분리 고려 및 에러 처리 개선
