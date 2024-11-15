@@ -13,7 +13,7 @@ export interface ButtonProps {
   color?: 'primary' | 'secondary' | 'default' | 'disabled';
 }
 
-export class Button extends View<ButtonProps> {
+export class Button<T extends ButtonProps = ButtonProps> extends View<T> {
   override template() {
     return html`
       <button
