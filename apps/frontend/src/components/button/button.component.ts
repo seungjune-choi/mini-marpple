@@ -1,4 +1,4 @@
-import { html, View } from 'rune-ts';
+import { html, on, View } from 'rune-ts';
 import style from './button.module.scss';
 
 export interface ButtonProps {
@@ -11,6 +11,7 @@ export interface ButtonProps {
   variant?: 'text' | 'outlined' | 'contained';
   size?: 'small' | 'medium' | 'large';
   color?: 'primary' | 'secondary' | 'default' | 'disabled';
+  onClick?: (e: Event) => Promise<void> | void;
 }
 
 export class Button<T extends ButtonProps = ButtonProps> extends View<T> {
@@ -26,5 +27,10 @@ export class Button<T extends ButtonProps = ButtonProps> extends View<T> {
         ${this.data.name}
       </button>
     `;
+  }
+
+  @on('click')
+  private async handleClick(e) {
+    this.data.onClick && (await this.data.onClick(e));
   }
 }

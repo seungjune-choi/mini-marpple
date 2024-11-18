@@ -47,6 +47,7 @@ async function initialize(app: Express) {
   await require('../libs/redis');
 
   app.use(appRouter);
+  app.use('/uploads', express.static('uploads'));
 
   // set up global exception filter
   app.use(httpExceptionFilter);

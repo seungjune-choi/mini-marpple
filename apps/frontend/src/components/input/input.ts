@@ -10,6 +10,7 @@ export interface InputProps<T = InputType> {
   type?: T;
   name: string;
   label?: string;
+  placeholder?: string;
   /**
    * @default ''
    */
@@ -24,16 +25,6 @@ export interface InputProps<T = InputType> {
 }
 
 export class Input extends View<InputProps> {
-  public get value() {
-    const input = this.element().querySelector('input')! as HTMLInputElement;
-    return input.value;
-  }
-
-  public set value(value: string) {
-    const input = this.element().querySelector('input')! as HTMLInputElement;
-    input.value = value;
-  }
-
   override template() {
     return html`
       <div class="${style['input-container']}">
@@ -42,7 +33,7 @@ export class Input extends View<InputProps> {
           class="${style['input-field']}"
           id="${this.data.name}"
           name="${this.data.name}"
-          type="text"
+          type="${this.data.type}"
           title="test"
           value="${this.data.value ?? ''}"
           ${this.data.maxLength ? `maxlength="${this.data.maxLength}"` : ''}
@@ -50,6 +41,7 @@ export class Input extends View<InputProps> {
           ${this.data.required ? 'required' : ''}
           ${this.data.min ? `min="${this.data.min}"` : ''}
           ${this.data.max ? `max="${this.data.max}"` : ''}
+          placeholder="${this.data.placeholder ?? ''}"
         />
         <p id="${this.data.name}-error-message" class="${style['error-message']}"></p>
       </div>
@@ -73,5 +65,28 @@ export class Input extends View<InputProps> {
     input.classList.remove(style['input-error']);
     const errorMessage = this.element().querySelector(`#${this.data.name}-error-message`)! as HTMLParagraphElement;
     errorMessage.textContent = '';
+  }
+
+  public get isValid() {
+    const value = this.value;
+    return !this.data.validate || this.data.validate(value);
+  }
+
+  public get value() {
+    const input = this.element().querySelector('input')! as HTMLInputElement;
+    return input.value;
+  }
+
+  public set value(value: string) {
+    const input = this.element().querySelector('input')! as HTMLInputElement;
+    input.value = value;
+  }
+
+  public clear() {
+    const input = this.element().querySelector('input')! as HTMLInputElement;
+    const errorParagraph = this.element().querySelector('p')!;
+    input.value = '';
+    errorParagraph.textContent = '';
+    input.classList.remove(style['input-error']);
   }
 }

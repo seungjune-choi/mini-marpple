@@ -1,17 +1,17 @@
 import style from './modal.module.scss';
 import { Box } from '../box';
-import { html, type Html } from 'rune-ts';
+import { html, View } from 'rune-ts';
 
 interface ModalProps {
   title?: string;
-  contents?: Html[];
+  contents?: View[];
 }
 
 export class Modal extends Box {
   constructor(private readonly props?: ModalProps) {
     super();
   }
-  
+
   override template() {
     return html`
       <div class="${style.modal}">
@@ -26,16 +26,16 @@ export class Modal extends Box {
 
   public open = () => this.element().classList.add(style.open);
 
-  #close = () => this.element().classList.remove(style.open);
+  public close = () => this.element().classList.remove(style.open);
 
   protected override onRender() {
     this.element()
       .querySelector(`.${style['modal-close']}`)!
-      .addEventListener('click', () => this.#close());
+      .addEventListener('click', () => this.close());
 
     this.element().addEventListener('click', (e) => {
       if (e.target === this.element()) {
-        this.#close();
+        this.close();
       }
     });
   }

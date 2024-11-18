@@ -13,4 +13,8 @@ export type RenderHandlerType<
   P = ParamsDictionary,
   ReqBody = any,
   ReqQuery = ParsedQs,
-> = (view: FactoryFunction<C>) => RequestHandler<P, any, ReqBody, ReqQuery, LocalsObj>;
+> = (
+  view: FactoryFunction<C>,
+) =>
+  | RequestHandler<P, any, ReqBody, ReqQuery, LocalsObj>
+  | Promise<RequestHandler<P, any, ReqBody, ReqQuery, LocalsObj>>;

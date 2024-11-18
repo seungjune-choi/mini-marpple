@@ -69,7 +69,6 @@ export class ProductRepository {
    *  - brief information of products
    */
   async findMany({ limit, cursor = 0, categoryId }: FindManyProductArgs): Promise<FindManyProductResult[]> {
-    console.log('findMany', { limit, cursor, categoryId });
     return await this.dataSource.$query<FindManyProductScheme>`
       WITH main_ids AS (
         SELECT 
@@ -88,19 +87,22 @@ export class ProductRepository {
       SELECT
         p.id as id,
         p.name as name,
+        p.price as price,
+        p.description as description,
         p.hidden as hidden,
         p.created_at as "createdAt",
         p.updated_at as "updatedAt",
         pi.id as "representativeImageId",
-        pi.path as "representativeImagePath"
-        ${categoryId ? this.dataSource.$sql`,c.id as "categoryId", c.name as "categoryName"` : this.dataSource.$sql``}
+        pi.path as "representativeImagePath",
+        c.id as "categoryId", c.name as "categoryName"
       FROM
         main_ids
       JOIN
         product_images pi ON pi.product_id = main_ids.id AND pi.is_representative = true
       JOIN
         products p ON p.id = main_ids.id
-      ${categoryId ? this.dataSource.$sql`JOIN categories c ON p.category_id = c.id AND c.id = ${categoryId}` : this.dataSource.$sql``}
+      JOIN 
+        categories c ON p.category_id = c.id
       ORDER BY
         p.id ASC,
         pi.id ASC
@@ -108,6 +110,8 @@ export class ProductRepository {
       res.map((scheme) => ({
         id: scheme.id,
         name: scheme.name,
+        price: scheme.price,
+        description: scheme.description,
         hidden: scheme.hidden,
         createdAt: scheme.createdAt,
         updatedAt: scheme.updatedAt,

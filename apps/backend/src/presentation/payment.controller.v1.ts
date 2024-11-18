@@ -1,9 +1,10 @@
-import { Controller, Param, Post, User } from '@libs/decorators';
+import { Controller, Param, Post, User, UseMiddleware } from '@libs/decorators';
 import { OrderService, PaymentService } from '@backend/usecase';
 import { BadRequestException, ForbiddenException, NotFoundException } from '@libs/exceptions/http';
 import { OrderStatus, type TargetUser } from '@backend/core';
 import { ResponseEntity } from '@libs/rest';
 import { withLock } from '@libs/lock';
+import { AuthGuard } from '@libs/middlewares';
 
 @Controller('/payments/v1')
 export class PaymentControllerV1 {
@@ -12,6 +13,7 @@ export class PaymentControllerV1 {
     private readonly paymentService: PaymentService,
   ) {}
 
+  @UseMiddleware(AuthGuard)
   @Post('prepare/order/:orderId')
   public async prepare(@User() user: TargetUser, @Param('orderId') orderId: string) {
     const order = await this.orderService.findOne(+orderId);
@@ -25,6 +27,7 @@ export class PaymentControllerV1 {
     return await this.paymentService.prepare(user, order).then(ResponseEntity.ok);
   }
 
+  @UseMiddleware(AuthGuard)
   @Post('complete/order/:orderId')
   public async complete(@User() user: TargetUser, @Param('orderId') orderId: string) {
     const order = await this.orderService.findOne(+orderId);
@@ -46,6 +49,7 @@ export class PaymentControllerV1 {
       });
   }
 
+  @UseMiddleware(AuthGuard)
   @Post('cancel/order/:orderId')
   public async cancel(@User() user: TargetUser, @Param('orderId') orderId: string) {
     const order = await this.orderService.findOne(+orderId);

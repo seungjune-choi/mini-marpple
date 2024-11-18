@@ -1,10 +1,11 @@
-import { Controller, Get, Param, Post, Query, User } from '@libs/decorators';
+import { Controller, Get, Param, Post, Query, UseMiddleware, User } from '@libs/decorators';
 import { CartService, OrderService } from '@backend/usecase';
 import type { TargetUser } from '@backend/core';
 import { ForbiddenException, NotFoundException } from '@libs/exceptions/http';
 import { withLock } from '@libs/lock';
 import { ResponseEntity } from '@libs/rest';
 import { FindManyOrderResponse } from './dto/response';
+import { AuthGuard } from '@libs/middlewares';
 
 @Controller('/orders/v1')
 export class OrderControllerV1 {
@@ -13,6 +14,7 @@ export class OrderControllerV1 {
     private readonly cartService: CartService,
   ) {}
 
+  @UseMiddleware(AuthGuard)
   @Get()
   public async findMany(
     @User() targetUser: TargetUser,
@@ -30,6 +32,7 @@ export class OrderControllerV1 {
       .then((res) => ResponseEntity.ok(FindManyOrderResponse.from(res)));
   }
 
+  @UseMiddleware(AuthGuard)
   @Post('/carts/:cartId')
   public async createFromCart(@User() targetUser: TargetUser, @Param('cartId') cartId: string) {
     const cart = await this.cartService.findOne(targetUser.id);

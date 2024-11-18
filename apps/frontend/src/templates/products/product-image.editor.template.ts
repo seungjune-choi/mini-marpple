@@ -15,27 +15,10 @@ export class ProductImageEditorTemplate extends Box {
 
   override template() {
     return html`
-      <div class="container horizontal">
-        <div class="container vertical">
-          <div class="form-group">
-            <div class="form-control">${this.image_preview}</div>
-            <div class="form-control">${this.button}</div>
-          </div>
-        </div>
-        <div class="container vertical">
-          <div
-            style="
-              width: 100%;
-              height: 100%;
-              background-color: #f1f1f1;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin: 0 auto;
-              "
-          >
-            Not yet implemented
-          </div>
+      <div class="container vertical">
+        <div class="form-group">
+          <div class="form-control">${this.image_preview}</div>
+          <div class="form-control">${this.button}</div>
         </div>
       </div>
     `;

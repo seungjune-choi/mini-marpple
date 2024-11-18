@@ -19,4 +19,8 @@ export class CategoryRepository {
       map((category) => plainToInstance(Category, category)),
       toArray,
     ).then(([category]) => category);
+
+  findMany(): Promise<{ id: number; name: string }[]> {
+    return this.dataSource.$query<{ id: number; name: string }>`SELECT id, name FROM categories`;
+  }
 }

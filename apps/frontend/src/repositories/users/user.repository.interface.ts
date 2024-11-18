@@ -1,12 +1,9 @@
+import type { ResponseEntity } from '../../model';
+import type { TargetUser } from '../../model/user.model';
 
-export interface SignInRequest {
-  email: string;
-  password: string;
-}
+export type SignInRequest = Pick<TargetUser, 'email'> & { password: string };
 
-export interface SignInResponse {
-  message: string;
-}
+export type SignInResponse = ResponseEntity<TargetUser>;
 
 export interface IUserRepository {
   signIn(request: SignInRequest): Promise<SignInResponse>;

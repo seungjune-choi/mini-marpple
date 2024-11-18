@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { container, singleton } from 'tsyringe';
 import { forEach, map, peek, pipe } from '@fxts/core';
 import { REQUEST_METHOD_TOKEN } from '@libs/decorators/rest/request-method.decorator';
@@ -41,9 +42,9 @@ function asyncHandler(handler: AnonymousFunction, target: ClassConstructor, meth
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       const args = resolveMethodParameters(req, target, methodName);
-      const result = await handler(...args);
+      const result = (await handler(...args)) as any;
       if (!res.headersSent) {
-        res.json(result);
+        res.status(result?.statusCode ?? 200).json(result);
       }
     } catch (error) {
       next(error);

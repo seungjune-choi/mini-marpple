@@ -10,7 +10,17 @@
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 999999;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s;
+
+  .h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+  }
 
   &.open {
     opacity: 1;
@@ -22,6 +32,10 @@
     padding: 20px;
     border-radius: 8px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .modal-close {

@@ -11,6 +11,8 @@
   "keywords": [],
   "author": "",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fxts/core": "^1.1.0",
     "@rune-ts/server": "^1.0.23",
     "axios": "^1.7.7",

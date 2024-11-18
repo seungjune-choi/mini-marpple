@@ -7,6 +7,6 @@ const server = app();
 
 server.use(faviconInterceptor);
 
-server.get(ClientRouter['/'].toString(), mainRenderHandler(ClientRouter['/']));
+server.get(ClientRouter['/'].toString(), await mainRenderHandler(ClientRouter['/']));
 
-server.get(ClientRouter['/sub'].toString(), subRenderHandler(ClientRouter['/sub']));
+server.get(ClientRouter['/sub'].toString(), await subRenderHandler(ClientRouter['/sub']));

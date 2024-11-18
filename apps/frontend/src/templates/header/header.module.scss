@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
+  z-index: 10;
+  position: fixed; // 헤더를 고정
+  top: 0; // 화면 상단에 배치
+  left: 0;
+  width: 100%; // 전체 화면 너비로 확장
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 5px;
+
+    button {
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+}

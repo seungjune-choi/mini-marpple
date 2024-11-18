@@ -31,6 +31,7 @@ export class CartControllerV1 {
   @Post('items')
   @UseMiddleware(AuthGuard)
   public async addItem(@User() targetUser: TargetUser, @Body() body: AddCartItemRequest) {
+    console.log('body', body);
     const [cart, product] = await Promise.all([
       this.cartService.findOne(targetUser.id),
       this.productService.findOne(body.productId),
@@ -65,7 +66,7 @@ export class CartControllerV1 {
     @Param('itemId') itemId: string,
     @Body() body: UpdateCartItemQuantityRequest,
   ) {
-    const cart = await this.cartService.findOne(13);
+    const cart = await this.cartService.findOne(targetUser.id);
     if (!cart) {
       throw new NotFoundException('장바구니가 존재하지 않습니다.');
     }

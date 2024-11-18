@@ -1,0 +1,47 @@
+// Define basic variables for styling
+$sidebar-width: 150px;
+$background-color: #f4f4f4;
+$text-color: #007bff;
+
+// Sidebar styles
+.sidebar {
+  width: $sidebar-width;
+  height: 100vh;
+  background-color: $background-color;
+  color: $text-color;
+  position: fixed; // 고정된 위치
+  left: 0; // 항상 화면의 왼쪽에 고정
+  top: 0; // 화면 상단에 고정
+  overflow-y: auto; // 내용이 길어지면 스크롤 가능
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); // 약간의 그림자 추가
+
+  .menu {
+    margin-top: 60px;
+    padding: 1rem;
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin: 1rem 0;
+
+        a {
+          color: $text-color;
+          text-decoration: none;
+          font-size: 1.2rem;
+          font-weight: bolder;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Toggle button styles
+.toggle-button {
+  display: none; // 토글 버튼 숨김 (더 이상 필요 없음)
+}
