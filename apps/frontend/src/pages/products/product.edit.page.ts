@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/await-thenable */
 import { html, Page, type Html } from 'rune-ts';
 import type { Product } from '../../model';
 import type { RenderHandlerType } from '../../../../../packages/types/renderHandlerType';
 import { MetaView, type LayoutData } from '@rune-ts/server';
-import { baseClient } from '../../web-client';
 import { ProductMetadataEditor } from '../../templates/products/product-metadata.editor';
 import { ProductImageEditor } from '../../templates/products';
 import { fx } from '@fxts/core';
@@ -79,13 +79,7 @@ export const productEditRenderHandler: RenderHandlerType<typeof ProductEditPage>
       };
 
       const params = req.query;
-
-      // TODO: repository로 분리...
-      const categories = await baseClient
-        .get('/categories/v1')
-        .then((res) => res.data)
-        .then((data) => data.data)
-        .then((data) => data.map((category) => ({ id: category.id, name: category.name })));
+      const categories = (req as any)?.categories;
 
       res.send(new MetaView(createPage({ categories }), layoutData).toHtml());
     })().catch((error) => {

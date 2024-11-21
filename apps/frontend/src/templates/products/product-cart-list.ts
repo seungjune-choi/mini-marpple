@@ -10,7 +10,6 @@ export interface ProductCartListProps {
 
 export class ProductCardList extends View<ProductCartListProps> {
   protected override template(): Html {
-    console.log(this.data.items);
     return html`<div class="${style['product-list-container']}">
       ${pipe(this.data.items, map(createProductBriefCard), toArray)}
     </div>`;
@@ -18,7 +17,6 @@ export class ProductCardList extends View<ProductCartListProps> {
 
   async rerender(items: ProductBrief[]) {
     this.data.items = items;
-    console.log(items);
     await this.redrawAsync();
   }
 }

@@ -2,13 +2,18 @@ import { createRouter } from '@rune-ts/server';
 import { MainRoute } from '../../pages/main';
 import { SubRoute } from '../../pages/sub';
 import { CartRoute } from '../../pages/cart';
-import { ProductEditRoute } from '../../pages/products';
+import { ProductEditRoute, ProductListRoute } from '../../pages/products';
 
-type RouterType = typeof MainRoute & typeof SubRoute & typeof CartRoute & typeof ProductEditRoute;
+type RouterType = typeof MainRoute &
+  typeof SubRoute &
+  typeof CartRoute &
+  typeof ProductEditRoute &
+  typeof ProductListRoute;
 
 export const ClientRouter = createRouter<RouterType>({
   ...MainRoute,
   ...SubRoute,
   ...CartRoute,
   ...ProductEditRoute,
+  ...ProductListRoute,
 });

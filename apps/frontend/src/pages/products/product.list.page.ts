@@ -1,17 +1,16 @@
-import { html, Page } from 'rune-ts';
-import type { RenderHandlerType } from '../../../../../packages/types/renderHandlerType';
-import { type LayoutData, MetaView } from '@rune-ts/server';
-import { Header, type HeaderProps } from '../../templates/header';
-import { SideBar, type SideBarProps } from '../../templates/side-bar';
-import { ProductListTemplate } from '../../templates/products';
-import { productRepository } from '../../repositories/products';
+import { Page, html } from 'rune-ts';
 import type { CursorBasedPaginationResponse, ProductBrief } from '../../model';
+import { Header, type HeaderProps } from '../../templates/header';
+import { ProductListTemplate } from '../../templates/products';
+import { SideBar, type SideBarProps } from '../../templates/side-bar';
+import { productRepository } from '../../repositories/products';
+import { MetaView } from '@rune-ts/server';
 
-interface MainPageData extends HeaderProps, SideBarProps {
+interface ProductListPageProps extends HeaderProps, SideBarProps {
   products: CursorBasedPaginationResponse<ProductBrief>;
 }
 
-export class MainPage extends Page<MainPageData> {
+export class ProductListPage extends Page<ProductListPageProps> {
   private header = new Header({ isSigned: this.data.isSigned });
   private sideBar = new SideBar({ categories: this.data.categories });
   private productListTemplate = new ProductListTemplate(this.data.products);
@@ -24,21 +23,23 @@ export class MainPage extends Page<MainPageData> {
   }
 }
 
-export const MainRoute = {
-  '/': MainPage,
+export const ProductListRoute = {
+  '/products': ProductListPage,
 };
 
-export const mainRenderHandler: RenderHandlerType<typeof MainPage> = (createCurrentPage) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (req: any, res) => {
+export const productListRenderHandler = (createCurrentPage) => {
+  return (req, res) => {
     (async () => {
-      const layoutData: LayoutData = {
+      const layoutData = {
         ...res.locals.layoutData,
       };
-
+      const query = req.query;
       const categories = req.categories;
       const isSigned = req.isSigned;
-      const products = await productRepository.findAll({});
+
+      const products = await productRepository.findAll({
+        categoryId: query.categoryId,
+      });
 
       res.send(new MetaView(createCurrentPage({ products, isSigned, categories }), layoutData).toHtml());
     })().catch((error) => {
