@@ -73,7 +73,6 @@ export class ImageList extends Carousel<ProductImageProps, ProductImage> {
 
   @on(PrimarySelected)
   private handlePrimarySelected(e: PrimarySelected) {
-    console.log(e.detail);
     pipe(
       this.data.children,
       map((img) => ({
@@ -82,5 +81,9 @@ export class ImageList extends Carousel<ProductImageProps, ProductImage> {
       })),
       forEach(({ img, primary }) => (primary ? img.select() : img.unselect())),
     );
+  }
+
+  get representativeIndex() {
+    return this.data.children.findIndex((img) => img.data.primary);
   }
 }

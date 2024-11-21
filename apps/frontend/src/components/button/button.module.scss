@@ -6,33 +6,33 @@
   border-radius: 4px;
   cursor: pointer;
 
-  &.text {
-    background-color: transparent;
-    color: #1976d2;
+  // &.text {
+  //   background-color: transparent;
+  //   color: #1976d2;
 
-    &:hover {
-      background-color: rgba(25, 118, 210, 0.04);
-    }
-  }
+  //   &:hover {
+  //     background-color: rgba(25, 118, 210, 0.04);
+  //   }
+  // }
 
-  &.outlined {
-    background-color: transparent;
-    color: #1976d2;
-    border: 1px solid rgba(25, 118, 210, 0.5);
+  // &.outlined {
+  //   background-color: transparent;
+  //   color: #1976d2;
+  //   border: 1px solid rgba(25, 118, 210, 0.5);
 
-    &:hover {
-      background-color: rgba(25, 118, 210, 0.04);
-    }
-  }
+  //   &:hover {
+  //     background-color: rgba(25, 118, 210, 0.04);
+  //   }
+  // }
 
-  &.contained {
-    background-color: #1976d2;
-    color: #fff;
+  // &.contained {
+  //   background-color: #1976d2;
+  //   color: #fff;
 
-    &:hover {
-      background-color: #1565c0;
-    }
-  }
+  //   &:hover {
+  //     background-color: #1565c0;
+  //   }
+  // }
 
   &.small {
     font-size: 13px;
@@ -49,17 +49,79 @@
     padding: 8px 22px;
   }
 
-  // &.default {
-  //   color: rgba(0, 0, 0, 0.87);
-  // }
+  &.danger {
+    color: #d32f2f;
 
-  // &.primary {
-  //   color: #1976d2;
-  // }
+    &.outlined {
+      border: 1px solid rgba(211, 47, 47, 0.5);
+    }
 
-  // &.secondary {
-  //   color: #dc004e;
-  // }
+    &.contained {
+      background-color: #d32f2f;
+      color: #fff;
+
+      &:hover {
+        background-color: #b71c1c;
+      }
+    }
+
+    &.text {
+      &:hover {
+        background-color: rgba(211, 47, 47, 0.04);
+      }
+    }
+  }
+
+  &.none {
+    color: 'inherit';
+
+    &.outlined {
+      border: 1px solid #f1f1f1;
+      color: '#000';
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    &.contained {
+      background-color: #f1f1f1;
+      color: #000;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    &.text {
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+
+  &.primary {
+    color: #1976d2;
+
+    &.outlined {
+      border: 1px solid rgba(25, 118, 210, 0.5);
+    }
+
+    &.contained {
+      background-color: #1976d2;
+      color: #fff;
+
+      &:hover {
+        background-color: #1565c0;
+      }
+    }
+
+    &.text {
+      &:hover {
+        background-color: rgba(25, 118, 210, 0.04);
+      }
+    }
+  }
 
   &:disabled {
     color: rgba(0, 0, 0, 0.26);

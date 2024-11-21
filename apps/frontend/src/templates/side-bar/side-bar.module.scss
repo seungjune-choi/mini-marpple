@@ -1,7 +1,7 @@
 // Define basic variables for styling
 $sidebar-width: 150px;
-$background-color: #f4f4f4;
-$text-color: #007bff;
+$background-color: #fff;
+$text-color: #6c757d;
 
 // Sidebar styles
 .sidebar {
@@ -13,27 +13,34 @@ $text-color: #007bff;
   left: 0; // 항상 화면의 왼쪽에 고정
   top: 0; // 화면 상단에 고정
   overflow-y: auto; // 내용이 길어지면 스크롤 가능
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); // 약간의 그림자 추가
+  // box-shadow: 1px 0 5px rgba(0, 0, 0, 0.25); // 약간의 그림자 추가
 
   .menu {
-    margin-top: 60px;
-    padding: 1rem;
+    margin-top: 5rem;
 
     ul {
       list-style: none;
       padding: 0;
 
       li {
-        margin: 1rem 0;
+        margin: 0.25rem 0;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
 
         a {
           color: $text-color;
           text-decoration: none;
-          font-size: 1.2rem;
+          font-size: 1rem;
           font-weight: bolder;
+        }
 
-          &:hover {
-            text-decoration: underline;
+        &:hover {
+          transform: translateY(-0.125rem); // 떠보이는 효과
+          box-shadow: 0 8px 12px rgba(0, 0, 0, 0.05);
+          cursor: pointer;
+
+          a {
+            color: darken($text-color, 10%);
           }
         }
       }

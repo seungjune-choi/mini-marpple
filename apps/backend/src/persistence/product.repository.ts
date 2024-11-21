@@ -68,7 +68,7 @@ export class ProductRepository {
    * @returns
    *  - brief information of products
    */
-  async findMany({ limit, cursor = 0, categoryId }: FindManyProductArgs): Promise<FindManyProductResult[]> {
+  async findMany({ limit, cursor, categoryId }: FindManyProductArgs): Promise<FindManyProductResult[]> {
     return await this.dataSource.$query<FindManyProductScheme>`
       WITH main_ids AS (
         SELECT 
@@ -78,9 +78,9 @@ export class ProductRepository {
         WHERE 
           1 = 1
         ${categoryId ? this.dataSource.$sql`AND category_id = ${categoryId}` : this.dataSource.$sql``}
-        ${cursor ? this.dataSource.$sql`AND id > ${cursor}` : this.dataSource.$sql``}
+        ${cursor ? this.dataSource.$sql`AND id < ${cursor}` : this.dataSource.$sql``}
         ORDER BY
-          id ASC
+          id DESC
         LIMIT 
           ${limit}
       )
@@ -98,13 +98,13 @@ export class ProductRepository {
       FROM
         main_ids
       JOIN
-        product_images pi ON pi.product_id = main_ids.id AND pi.is_representative = true
-      JOIN
         products p ON p.id = main_ids.id
+      LEFT JOIN
+        product_images pi ON pi.product_id = main_ids.id AND pi.is_representative = true
       JOIN 
         categories c ON p.category_id = c.id
       ORDER BY
-        p.id ASC,
+        p.id DESC,
         pi.id ASC
     `.then((res) =>
       res.map((scheme) => ({

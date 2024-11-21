@@ -1,46 +1,43 @@
 import { html, on, View, type Html } from 'rune-ts';
 import type { CursorBasedPaginationResponse, ProductBrief } from '../../model';
-import { Card } from '../../components/card';
 import style from './product-list.module.scss';
-import { pipe } from '@fxts/core';
 import { cartRepository } from '../../repositories/carts';
+import { productRepository } from '../../repositories/products';
+import { ProductCardList } from './product-cart-list';
 
 export class ProductListTemplate extends View<CursorBasedPaginationResponse<ProductBrief>> {
+  private list = new ProductCardList({ items: this.data.items });
+
   protected override template(): Html {
     return html`
-      <div class="${style['product-list-container']}">
-        ${pipe(this.data.items, (items) =>
-          items.map(
-            (item) =>
-              new Card({
-                body: productBriefCardBody(item),
-                footer: productBriefCardFooter(item),
-              }),
-          ),
-        )}
+      <div>
+        ${this.list}
+        <div id="sentinel"></div>
       </div>
     `;
   }
 
   @on('click', `.${style['cart-button']}`)
   async handleCartButtonClick(e) {
-    // TODO: 장바구니에 상품 추가
-    console.log(e.currentTarget.dataset.id);
     await cartRepository.addItem(+e.currentTarget.dataset.id, 1);
   }
-}
 
-function productBriefCardBody(target: ProductBrief): Html {
-  return html`<div class="${style['product-brief-card-body']}">
-    <img src="${target.representativeImage.url}" alt="${target.representativeImage.url}" />
-  </div>`;
-}
+  protected override onRender(): void {
+    const target = this.element().querySelector('#sentinel')!;
 
-function productBriefCardFooter(target: ProductBrief): Html {
-  return html`<div class="${style['product-brief-card-footer']}">
-    <div class="${style['cart-button']}" data-id="${target.id}"><i class="fas fa-shopping-cart"></i></div>
-    <div class="${style.name}">${target.name}</div>
-    <div class="${style.description}">${target.description}</div>
-    <div class="${style.price}">${target.price} 원</div>
-  </div>`;
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    const observer = new IntersectionObserver(async (entries) => {
+      if (entries[0].isIntersecting) {
+        const { cursor } = this.data;
+        if (cursor) {
+          const nextData = await productRepository.findAll({ cursor });
+          this.data.items = [...this.data.items, ...nextData.items];
+          this.data.cursor = nextData.cursor;
+          await this.list.rerender(this.data.items);
+        }
+      }
+    });
+
+    observer.observe(target);
+  }
 }

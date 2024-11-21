@@ -7,6 +7,7 @@ class CartItemResponse {
     id: number;
     name: string;
     price: number;
+    description: string;
     representativeImage: {
       id: number;
       url: string;
@@ -17,6 +18,7 @@ class CartItemResponse {
 
   constructor(args: Omit<CartItemResponse, 'totalPrice'>) {
     Object.assign(this, args);
+    this.product.representativeImage.url = `http://localhost:3000/uploads/${this.product.representativeImage.url}`;
     this.totalPrice = this.product.price * this.quantity;
   }
 
@@ -27,6 +29,7 @@ class CartItemResponse {
         id: entity.product.id!,
         name: entity.product.name,
         price: entity.product.price,
+        description: entity.product.description,
         representativeImage: {
           id: entity.product.getRepresentativeImage().id!,
           url: entity.product.getRepresentativeImage().path!,

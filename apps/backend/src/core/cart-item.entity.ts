@@ -48,8 +48,23 @@ export class CartItem extends BaseEntity<number> {
     if (this.quantity - quantity < 0) {
       throw new UnprocessableEntityException('수량은 0개 미만으로 설정할 수 없습니다.');
     }
-    
+
     this.quantity -= quantity;
+  };
+
+  @Exclude()
+  updateQuantity = (quantity: number) => {
+    if (quantity < 0) {
+      throw new UnprocessableEntityException('수량은 0개 미만으로 설정할 수 없습니다.');
+    }
+
+    if (quantity > this.product.stockQuantity) {
+      throw new UnprocessableEntityException(
+        `${this.product.name}는 최대 ${this.product.stockQuantity}개까지 구매 가능합니다.`,
+      );
+    }
+
+    this.quantity = quantity;
   };
 
   @Exclude()

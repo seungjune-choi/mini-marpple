@@ -1,9 +1,7 @@
-import { CustomEventWithoutDetail, html } from 'rune-ts';
-import { Box, Modal } from '../../components';
+import { html } from 'rune-ts';
+import { Box, CloseModal, Modal } from '../../components';
 import { SignInForm } from './sign-in.form';
-import { UserRepository } from '../../repositories/users/user.repository';
-
-export class CloseModal extends CustomEventWithoutDetail {}
+import { UserRepository } from '../../repositories/users/user.repository.impl';
 
 export class SignInModal extends Box {
   private repository = new UserRepository();

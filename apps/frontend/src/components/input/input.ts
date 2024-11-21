@@ -48,19 +48,19 @@ export class Input extends View<InputProps> {
     `;
   }
 
-  @on('change', `.${style['input-field']}`)
-  _handelChange(e) {
-    if (this.data.validate) {
+  @on('focusout', `.${style['input-field']}`)
+  private handelChange(e) {
+    if (e.target.value && this.data.validate) {
       const input = e.target as HTMLInputElement;
       const errorMessage = this.element().querySelector(`#${this.data.name}-error-message`)! as HTMLParagraphElement;
       const isValid = this.data.validate(input.value);
-      errorMessage.textContent = isValid ? '' : this.data.errorMessages ?? '유효하지 않은 값입니다.';
+      errorMessage.innerHTML = isValid ? '' : this.data.errorMessages ?? '유효하지 않은 값입니다.';
       input.classList.toggle(style['input-error'], !isValid);
     }
   }
 
   @on('focusin', `.${style['input-field']}`)
-  _handleFocus(e) {
+  private handleFocus(e) {
     const input = e.target as HTMLInputElement;
     input.classList.remove(style['input-error']);
     const errorMessage = this.element().querySelector(`#${this.data.name}-error-message`)! as HTMLParagraphElement;
@@ -69,7 +69,7 @@ export class Input extends View<InputProps> {
 
   public get isValid() {
     const value = this.value;
-    return !this.data.validate || this.data.validate(value);
+    return (!this.data.validate || this.data.validate(value)) && this.data.required ? !!value : true;
   }
 
   public get value() {

@@ -1,11 +1,10 @@
 import { html } from 'rune-ts';
-import { Box } from '../../components';
+import { Box, CloseModal } from '../../components';
 import { Input } from '../../components/input';
 import { z } from 'zod';
 import style from './sign-in.module.scss';
 import type { IUserRepository } from '../../repositories/users';
 import { Button } from '../../components/button';
-import { CloseModal } from './sign-in.modal';
 
 export class SignInForm extends Box {
   constructor(private readonly userRepository: IUserRepository) {

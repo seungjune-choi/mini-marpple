@@ -1,0 +1,43 @@
+.switch-container {
+  margin: 8px 0;
+}
+
+.switch-label {
+  font-weight: bold;
+  margin-bottom: 4px;
+  display: block;
+  padding-left: 4px;
+  color: #757575;
+}
+
+.btn {
+  height: 28px;
+  width: 44px;
+  border-radius: 15px;
+  border: 0 none;
+  padding: 5px;
+  box-sizing: border-box;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+  background-color: #aaa;
+
+  &.on {
+    background-color: #1976d2;
+
+    .toggle {
+      transform: translateX(16px); // 토글 위치 이동
+    }
+  }
+}
+
+.toggle {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border-radius: 9px;
+  background: white;
+  transform: translateX(0);
+  transition-property: transform;
+  transition-duration: 0.2s;
+}

@@ -10,11 +10,52 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+
+  &.vertical {
+    flex-direction: column;
+  }
+
+  &.horizontal {
+    flex-direction: row;
+  }
 }
 
 .form-control {
-  padding: 5px;
+  padding: 0.5rem;
+  gap: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.vertical {
+    flex-direction: column;
+  }
+
+  &.horizontal {
+    flex-direction: row;
+  }
+
+  &.left {
+    justify-content: flex-start;
+  }
+
+  &.right {
+    justify-content: flex-end;
+  }
+
+  &.center {
+    justify-content: center;
+  }
+
+  &.between {
+    justify-content: space-between;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 4px;
+    display: block;
+    padding-left: 4px;
+    color: #757575;
+  }
 }

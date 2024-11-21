@@ -12,10 +12,10 @@ export interface RequestMetadata {
 
 export function Parameter(type: RequestMetadata['type'], propertyKey?: string): ParameterDecorator {
   return (target, propertyKeyOrSymbol, parameterIndex) => {
-    const requestMetadata : RequestMetadata[] = pipe(
+    const requestMetadata: RequestMetadata[] = pipe(
       Reflect.getOwnMetadata(PARAM_METADATA, target, propertyKeyOrSymbol as string) || [],
       append({ index: parameterIndex, type, propertyKey }),
-      toArray
+      toArray,
     );
 
     Reflect.defineMetadata(PARAM_METADATA, requestMetadata, target, propertyKeyOrSymbol as string);
@@ -31,11 +31,7 @@ export const Res = () => Parameter('res');
 export const Headers = (propertyKey?: string) => Parameter('headers', propertyKey);
 export const User = () => Parameter('user');
 
-export function resolveMethodParameters(
-  req: Request,
-  target: ClassConstructor,
-  methodName: string | symbol,
-) {
+export function resolveMethodParameters(req: Request, target: ClassConstructor, methodName: string | symbol) {
   const args = new Array<unknown>(target[methodName].length);
   pipe(
     (Reflect.getOwnMetadata(PARAM_METADATA, target, methodName as string) || []) as RequestMetadata[],
@@ -68,7 +64,7 @@ export function resolveMethodParameters(
         default:
           throw new Error('Invalid parameter type');
       }
-    })
+    }),
   );
 
   return args;

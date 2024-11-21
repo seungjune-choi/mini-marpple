@@ -53,7 +53,7 @@ export class Cart extends BaseEntity<number> {
       throw new BadRequestException('수량을 변경할 상품이 존재하지 않습니다.');
     }
 
-    item.decreaseQuantity(quantity);
+    item.updateQuantity(quantity);
   }
 
   @Exclude()

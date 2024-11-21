@@ -10,7 +10,7 @@ export interface ButtonProps {
    */
   variant?: 'text' | 'outlined' | 'contained';
   size?: 'small' | 'medium' | 'large';
-  color?: 'primary' | 'secondary' | 'default' | 'disabled';
+  color?: 'primary' | 'secondary' | 'default' | 'none' | 'danger';
   onClick?: (e: Event) => Promise<void> | void;
 }
 
@@ -19,9 +19,9 @@ export class Button<T extends ButtonProps = ButtonProps> extends View<T> {
     return html`
       <button
         id="${this.data.id}"
-        class="${style.button} ${style[this.data.variant ?? 'outlined']} ${style[this.data.size ?? 'medium']} ${style[
-          this.data.color ?? 'primary'
-        ]}"
+        class="${style.button} ${style[this.data.color ?? 'primary']} ${style[this.data.variant ?? 'outlined']} ${style[
+          this.data.size ?? 'medium'
+        ]} "
         type="${this.data.type ?? 'button'}"
       >
         ${this.data.name}

@@ -24,24 +24,24 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 10 * 1024 * 1024, // 파일당 최대 크기: 1MB
-    files: 10, // 최대 파일 개수: 10개
+    fileSize: 100 * 1024 * 1024, // 파일당 최대 크기: 10MB
+    files: 1,
   },
-}).array('images', 10); // 'images' 필드에서 최대 10개 파일 허용
+}).single('image'); // 'images' 필드에서 최대 10개 파일 허용
 
 @Controller('/files/v1')
 export class FileControllerV1 {
   constructor(private readonly imageService: ProductImageService) {}
 
   @Post('/images')
-  public async imageUpload(@Req() req: Request) {
-    const files = await this.#uploadFiles(req);
-    const imagePaths = files.map((file) => file.path);
-    return await this.imageService.create(imagePaths).then(ResponseEntity.created);
+  public async uploadImage(@Req() req: Request) {
+    const file = await this.#uploadFiles(req);
+
+    return await this.imageService.create(file.path).then(ResponseEntity.created);
   }
 
   // TODO: service logic 으로 분리 고려 및 에러 처리 개선
-  #uploadFiles(req: Request): Promise<Express.Multer.File[]> {
+  #uploadFiles(req: Request): Promise<Express.Multer.File> {
     return new Promise((resolve, reject) => {
       upload(req, {} as Response, (err) => {
         if (err) {
@@ -56,7 +56,7 @@ export class FileControllerV1 {
           }
           reject({ error: 'Unknown image upload exception' });
         }
-        resolve(req.files as Express.Multer.File[]);
+        resolve(req.file!);
       });
     });
   }

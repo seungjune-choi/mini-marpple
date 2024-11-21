@@ -1,2 +1,2 @@
 export * from './product.repository.interface';
-export * from './product.repository';
+export * from './product.repository.impl';

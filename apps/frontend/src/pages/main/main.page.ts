@@ -30,7 +30,7 @@ export const mainRenderHandler: RenderHandlerType<typeof MainPage> = (createCurr
       const layoutData: LayoutData = {
         ...res.locals.layoutData,
       };
-      const productList = await productRepository.findAll();
+      const productList = await productRepository.findAll({});
       res.send(new MetaView(createCurrentPage(productList), layoutData).toHtml());
     })().catch((error) => {
       console.error(error);

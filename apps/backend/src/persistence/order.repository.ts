@@ -177,7 +177,3 @@ export class OrderRepository {
       });
   }
 }
-
-// function convertFindResponse(scheme: FindManyOrderScheme[]): FindManyOrdersResult[] {
-//   const res
-// }

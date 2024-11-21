@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@libs/decorators';
 import { FindManyOrderArgs, InventoryReservationRepository, OrderRepository } from '@backend/persistence';
 import { DATA_SOURCE, DataSource } from '@libs/database';
-import { Cart, Order, OrderStatus } from '@backend/core';
+import { Cart, Order } from '@backend/core';
 import { ShippingFeeCalculator } from '@backend/usecase/shipping-fee-calculator';
 import { InventoryReservation } from '@backend/core/inventory-reservation.entity';
 import { Logger } from '@libs/logger';

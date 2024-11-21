@@ -4,22 +4,20 @@ export interface Product {
   price: number;
   description: string;
   hidden: boolean;
-  category: {
-    id: number;
-    name: string;
-  };
+  stockQuantity: number;
+  categoryId: number;
   createdAt: Date;
   updatedAt: Date;
   images: {
     id: string;
     src: string;
     isRepresentative: boolean;
-  };
+  }[];
 }
 
 export type ProductBrief = Pick<
   Product,
-  'id' | 'category' | 'createdAt' | 'updatedAt' | 'description' | 'hidden' | 'name' | 'price'
+  'id' | 'createdAt' | 'updatedAt' | 'description' | 'hidden' | 'name' | 'price'
 > & {
   representativeImage: {
     id: string;

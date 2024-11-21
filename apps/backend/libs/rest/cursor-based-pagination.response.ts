@@ -1,4 +1,4 @@
 export interface CursorBasedPaginationResponse<T> {
   items: T[];
-  cursor: number;
+  cursor: number | null;
 }

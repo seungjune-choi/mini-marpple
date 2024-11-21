@@ -27,23 +27,25 @@ export class ProductControllerV1 {
 
   @Get()
   async findMany(
-    @Query('limit') limit: string,
+    @Query('limit') _limit: string,
     @Query('cursor') cursor?: string,
     @Query('categoryId') categoryId?: string,
   ) {
+    const limit = _limit ? +_limit : 10;
     return await this.productService
       .findMany({
-        limit: limit ? +limit : undefined,
+        limit,
         cursor: cursor ? +cursor : undefined,
-        categoryId: categoryId ? parseInt(categoryId) : undefined,
+        categoryId: categoryId ? +categoryId : undefined,
       })
-      .then((res) => ResponseEntity.ok(FindManyProductResponse.from(res)));
+      .then((res) => ResponseEntity.ok(FindManyProductResponse.from(res, limit)));
   }
 
   @UseMiddleware(BodyValidator(CreateProductRequest))
   @Post()
   async create(@Body() request: CreateProductRequest) {
-    const representativeImageId = request.images.find((image) => image.isRepresentative)?.id || request.images[0].id;
+    // 대표 이미지가 없을 경우 첫 번째 이미지를 대표 이미지로 설정
+    const representativeImageId = request.images.find((image) => image.isRepresentative)?.id ?? request.images[0].id;
     const images = await this.productImageService.findMany(request.images.map((image) => image.id));
     images.find((image) => image.id === representativeImageId)?.setRepresentative(true);
 
@@ -58,7 +60,7 @@ export class ProductControllerV1 {
       throw new NotFoundException('존재하지 않는 상품입니다.');
     }
 
-    const representativeImageId = request.images.find((image) => image.isRepresentative)?.id || request.images[0].id;
+    const representativeImageId = request.images.find((image) => image.isRepresentative)?.id ?? request.images[0].id;
     const images = await this.productImageService.findMany(request.images.map((image) => image.id));
     images.find((image) => image.id === representativeImageId)?.setRepresentative(true);
 

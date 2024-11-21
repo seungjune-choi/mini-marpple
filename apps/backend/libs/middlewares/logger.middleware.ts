@@ -16,14 +16,14 @@ export const loggerMiddleware: RequestHandler = (req, res, next) => {
         requester,
         method: req.method,
         url: req.originalUrl,
-        statusCode: res.statusCode,       // 응답 코드
+        statusCode: res.statusCode, // 응답 코드
         statusMessage: res.statusMessage, // 응답 메시지
         contentLength: res.get('content-length'), // 실제 응답 content-length
         contentType: res.get('content-type'),
         ip: req.ip,
         elapsedTime: `${elapsedTime}ms`,
         timestamp: new Date().toISOString(),
-      })}`
+      })}`,
     );
   });
 

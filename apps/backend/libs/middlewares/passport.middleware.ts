@@ -19,7 +19,7 @@ export function initializeSession(app: Router) {
     session({
       store: redisStore,
       secret: 'secret',
-      resave: false,
+      resave: true,
       saveUninitialized: false,
       name: '_sid_',
       proxy: true,

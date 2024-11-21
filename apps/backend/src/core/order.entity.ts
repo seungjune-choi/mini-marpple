@@ -3,6 +3,7 @@ import { OrderItem } from '@backend/core/order-item.entity';
 import { Exclude, Expose } from 'class-transformer';
 import { Cart } from '@backend/core/cart.entity';
 import { OrderStatus } from '@backend/core/order-status';
+import { UnprocessableEntityException } from '@libs/exceptions/http';
 
 export class Order extends BaseEntity<number> {
   @Expose({ name: 'merchant_uid' })
@@ -28,6 +29,11 @@ export class Order extends BaseEntity<number> {
   }
 
   static fromCart(cart: Cart, shippingFee: number): Order {
+    // validation
+    if (cart.items.length === 0) {
+      throw new UnprocessableEntityException('카트에 상품이 없습니다.');
+    }
+
     const order = new Order();
     order.merchantUid = `ORD${Date.now()}`;
     order.userId = cart.userId;

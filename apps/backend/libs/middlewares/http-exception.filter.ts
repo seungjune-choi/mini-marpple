@@ -5,6 +5,7 @@ import { ResponseEntity } from '@libs/rest';
 
 export const httpExceptionFilter = (err: Error | HttpException, req, res, next) => {
   if (err instanceof HttpException) {
+    console.error(err);
     return res.status(err.status).json(new ResponseEntity(err.status, err.message, null, err.statusMessage));
   } else {
     console.error(err);

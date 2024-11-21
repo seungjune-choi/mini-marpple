@@ -13,10 +13,10 @@ export class Header extends Box {
       <div>
         <header class="${style.header}">
           <div class="${style.logo}">
-            <a href="/">mini marpple</a>
+            <a href="/">MINI MARPPLE</a>
           </div>
           <div class="${style.buttons}">
-            <button class="${style.button}">
+            <button id="cart" class="${style.button}">
               <i class="fas fa-shopping-cart"></i>
             </button>
             <button id="auth" class="${style.button}">
@@ -30,7 +30,12 @@ export class Header extends Box {
   }
 
   @on('click', '#auth')
-  private onClick() {
+  private onAuthClick() {
     this.modal.open();
+  }
+
+  @on('click', '#cart')
+  private onCartClick() {
+    window.location.href = '/carts';
   }
 }

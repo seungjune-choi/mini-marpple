@@ -1,14 +1,16 @@
 import style from './modal.module.scss';
 import { Box } from '../box';
-import { html, View } from 'rune-ts';
+import { CustomEventWithoutDetail, html, View } from 'rune-ts';
 
 interface ModalProps {
   title?: string;
   contents?: View[];
 }
 
+export class CloseModal extends CustomEventWithoutDetail {}
+
 export class Modal extends Box {
-  constructor(private readonly props?: ModalProps) {
+  constructor(private readonly props: ModalProps) {
     super();
   }
 
@@ -27,6 +29,10 @@ export class Modal extends Box {
   public open = () => this.element().classList.add(style.open);
 
   public close = () => this.element().classList.remove(style.open);
+
+  public setContents(contents: View[]) {
+    this.props.contents = contents;
+  }
 
   protected override onRender() {
     this.element()

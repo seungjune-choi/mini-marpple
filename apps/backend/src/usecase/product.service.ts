@@ -25,10 +25,10 @@ export class ProductService {
     return await this.productRepository.findOne(id);
   }
 
-  @Cacheable()
+  // @Cacheable()
   async findMany(args: FindManyProductArgs) {
     return await this.productRepository.findMany({
-      limit: args.limit || 10,
+      limit: args.limit,
       cursor: args.cursor,
       categoryId: args.categoryId,
     });

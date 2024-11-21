@@ -1,0 +1,52 @@
+$primary-color: #f1f1f1;
+$button-hover-color: darken($primary-color, 10%);
+
+// Counter container
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $primary-color;
+  gap: 4px;
+  width: 80px;
+  border-radius: 8px;
+
+  // Counter button
+  .button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $button-hover-color;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  // Editable span for the counter value
+  .value {
+    min-width: 25px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 1px solid $primary-color;
+    border-radius: 5px;
+    padding: 2.5px;
+    outline: none;
+
+    &:focus {
+      border-color: $button-hover-color;
+    }
+  }
+}
