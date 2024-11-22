@@ -4,6 +4,7 @@ import type { IPaymentRepository, PreparePaymentResponse } from './payment.repos
 
 export class PaymentRepository implements IPaymentRepository {
   #baseUrl = '/payments/v1';
+
   prepare(orderId: number): Promise<PreparePaymentResponse> {
     return baseClient
       .post<ResponseEntity<PreparePaymentResponse>>(`${this.#baseUrl}/prepare/order/${orderId}`)
@@ -13,6 +14,12 @@ export class PaymentRepository implements IPaymentRepository {
   complete(orderId: number): Promise<void> {
     return baseClient
       .post<ResponseEntity<void>>(`${this.#baseUrl}/complete/order/${orderId}`)
+      .then((res) => res.data.data);
+  }
+
+  cancel(orderId: number): Promise<void> {
+    return baseClient
+      .post<ResponseEntity<void>>(`${this.#baseUrl}/cancel/order/${orderId}`)
       .then((res) => res.data.data);
   }
 }

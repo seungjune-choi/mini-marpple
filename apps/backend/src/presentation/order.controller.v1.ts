@@ -18,18 +18,19 @@ export class OrderControllerV1 {
   @Get()
   public async findMany(
     @User() targetUser: TargetUser,
-    @Query('limit') limit: string,
+    @Query('limit') _limit: string,
     @Query('cursor') cursor?: string,
-    @Query('categoryId') status?: string,
+    @Query('status') status?: string,
   ) {
+    const limit = _limit ? +_limit : 10;
     return await this.orderService
       .findMany({
         userId: targetUser.id,
-        limit: limit ? +limit : undefined,
+        limit,
         cursor: cursor ? +cursor : undefined,
         status: status,
       })
-      .then((res) => ResponseEntity.ok(FindManyOrderResponse.from(res)));
+      .then((res) => ResponseEntity.ok(FindManyOrderResponse.from(res, limit)));
   }
 
   @UseMiddleware(AuthGuard)

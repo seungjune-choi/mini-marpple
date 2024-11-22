@@ -1,10 +1,10 @@
 import style from './modal.module.scss';
 import { Box } from '../box';
-import { CustomEventWithoutDetail, html, View } from 'rune-ts';
+import { CustomEventWithoutDetail, html, View, type Html } from 'rune-ts';
 
 interface ModalProps {
   title?: string;
-  contents?: View[];
+  contents?: (View | Html)[];
 }
 
 export class CloseModal extends CustomEventWithoutDetail {}

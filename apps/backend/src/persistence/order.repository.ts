@@ -60,10 +60,11 @@ export class OrderRepository {
     return await this.dataSource.$query<FindManyOrderResult>`
       SELECT 
         o.id AS id,
-        o.merchant_uid AS merchantUid,
-        o.total_price AS totalPrice,
-        o.created_at AS createdAt,
-        o.updated_at AS updatedAt,
+        o.merchant_uid AS "merchantUid",
+        o.total_price AS "totalPrice",
+        o.shipping_fee AS "shippingFee",
+        o.created_at AS "createdAt",
+        o.updated_at AS "updatedAt",
         o.status AS status,
         JSON_AGG(
           JSON_BUILD_OBJECT(
@@ -71,7 +72,11 @@ export class OrderRepository {
             'product', JSON_BUILD_OBJECT(
               'id', p.id,
               'name', p.name,
-              'representative_image', JSON_BUILD_OBJECT(
+              'createdAt', p.created_at,
+              'updatedAt', p.updated_at,
+              'price', p.price,
+              'description', p.description,
+              'representativeImage', JSON_BUILD_OBJECT(
                 'id', pi.id,
                 'url', pi.path
               )

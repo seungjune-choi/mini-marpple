@@ -1,6 +1,5 @@
-import { html, View, type Html } from 'rune-ts';
+import { html, on, View, type Html } from 'rune-ts';
 import style from './side-bar.module.scss';
-
 export interface SideBarProps {
   categories: { id: string; name: string }[];
 }
@@ -13,7 +12,7 @@ export class SideBar extends View<SideBarProps> {
         <nav class="${style.menu}">
           <!-- Navigation menu inside the sidebar -->
           <ul>
-            <li><a href="/">Total</a></li>
+            <li><a href="/">All</a></li>
             ${this.data.categories.map(
               (category) => html`
                 <li>
@@ -23,8 +22,17 @@ export class SideBar extends View<SideBarProps> {
             )}
           </ul>
         </nav>
-        <div class="${style['bottom-menu']}"><h4>개발중</h4></div>
+        <div class="${style['bottom-menu']}">
+          <a href="/product-edit">Edit product</a>
+        </div>
       </div>
     `;
+  }
+
+  @on('click', 'li')
+  private handleCategoryClick(event: Event) {
+    const target = event.target as HTMLElement;
+    const link = target.querySelector('a')!;
+    window.location.href = link.href;
   }
 }

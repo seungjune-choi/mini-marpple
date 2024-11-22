@@ -19,12 +19,14 @@ export class Header extends View<HeaderProps> {
             <a href="/">MiNi MARPPLE</a>
           </div>
           <div class="${style.buttons}">
-            <button id="cart" class="${style.button}">
+            <button id="cart" data-location="/carts" class="location ${style.button}">
               <i class="fas fa-shopping-cart"></i>
             </button>
             ${!this.data.isSigned
               ? html`<button id="auth" class="${style.button}"><i class="fas fa-user"></i></button>`
-              : ''}
+              : html`<button id="order" data-location="/orders" class="location ${style.button}">
+                  <i class="fas fa-receipt"></i>
+                </button>`}
           </div>
         </header>
         ${this.modal}
@@ -37,8 +39,14 @@ export class Header extends View<HeaderProps> {
     this.modal.open();
   }
 
-  @on('click', '#cart')
-  private onCartClick() {
-    window.location.href = '/carts';
+  @on('click', '.location')
+  private onButtonClick(e: MouseEvent) {
+    const button = e.target as HTMLElement;
+    const location = button.dataset.location;
+    if (location) {
+      window.location.href = location;
+    } else {
+      alert('Not implemented yet');
+    }
   }
 }

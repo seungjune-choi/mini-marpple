@@ -53,6 +53,22 @@ $text-color: #6c757d;
     width: 100%;
     padding: 1rem;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+    a {
+      color: $text-color;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: bolder;
+    }
+
+    &:hover {
+      transform: translateY(-0.125rem); // 떠보이는 효과
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      a {
+        color: darken($text-color, 10%);
+      }
+    }
   }
 }
 

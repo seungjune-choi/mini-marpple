@@ -18,7 +18,7 @@ export class Button<T extends ButtonProps = ButtonProps> extends View<T> {
   override template() {
     return html`
       <button
-        id="${this.data.id}"
+        id="${this.data.id ?? ''}"
         class="${style.button} ${style[this.data.color ?? 'primary']} ${style[this.data.variant ?? 'outlined']} ${style[
           this.data.size ?? 'medium'
         ]} "

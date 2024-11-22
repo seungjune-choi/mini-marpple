@@ -4,6 +4,7 @@ export interface FindManyOrderResult {
   id: number;
   merchantUid: string;
   totalPrice: number;
+  shoppingFee: number;
   createdAt: Date;
   updatedAt: Date;
   status: OrderStatus;
@@ -12,6 +13,11 @@ export interface FindManyOrderResult {
     product: {
       id: number;
       name: string;
+      createdAt: Date;
+      updatedAt: Date;
+      price: number;
+      description: string;
+      hidden: boolean;
       representativeImage: {
         id: number;
         url: string;

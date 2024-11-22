@@ -18,7 +18,7 @@ class CartItemResponse {
 
   constructor(args: Omit<CartItemResponse, 'totalPrice'>) {
     Object.assign(this, args);
-    this.product.representativeImage.url = `http://localhost:3000/uploads/${this.product.representativeImage.url}`;
+    this.product.representativeImage.url = `http://localhost:3000/${this.product.representativeImage.url}`;
     this.totalPrice = this.product.price * this.quantity;
   }
 

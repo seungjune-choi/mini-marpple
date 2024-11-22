@@ -1,0 +1,144 @@
+$order-bg-color: #f9f9f9;
+$order-border-color: #ddd;
+$order-font-color: #333;
+
+.order-list {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-card {
+  position: relative;
+  border: 1px solid $order-border-color;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: $order-bg-color;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+
+    h4 {
+      font-size: 16px;
+      color: $order-font-color;
+      margin: 0;
+    }
+
+    p {
+      display: block;
+      font-size: 0.75rem;
+      color: #888; // 날짜는 더 어두운 색으로
+      margin-top: 2px;
+    }
+
+    .status {
+      border-radius: 4px;
+
+      &.pending {
+        color: #705700;
+      }
+      &.completed {
+        color: #007bff;
+      }
+      &.canceled {
+        color: #a61c00;
+      }
+    }
+  }
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid $order-border-color;
+
+    .image-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 10px;
+      gap: 5px;
+    }
+
+    .price-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .name {
+      font-weight: bold;
+    }
+
+    .quantity,
+    .price {
+      font-size: 14px;
+      font-weight: bolder;
+      color: $order-font-color;
+    }
+
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    &.cancelled {
+      opacity: 0.5;
+      filter: blur(1px);
+    }
+  }
+
+  .details {
+    margin-top: 10px;
+    padding: 10px;
+    background: white;
+    border: 1px solid $order-border-color;
+    border-radius: 6px;
+  }
+
+  .total {
+    width: 100%;
+    right: 10px;
+    display: flex;
+    right: 10px;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 10px;
+
+    .with {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 150px;
+    }
+
+    strong {
+      font-size: 0.75rem;
+      font-weight: bolder;
+    }
+  }
+
+  .cancel-wrapper {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+}
