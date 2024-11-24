@@ -16,7 +16,7 @@ export class CartControllerV1 {
   ) {}
 
   @Get()
-  @UseMiddleware(AuthGuard)
+  @UseMiddleware([AuthGuard])
   public async findOne(@User() targetUser: TargetUser) {
     const cart = await this.cartService.findOne(targetUser.id);
     if (!cart) {
@@ -29,7 +29,7 @@ export class CartControllerV1 {
   }
 
   @Post('items')
-  @UseMiddleware(AuthGuard)
+  @UseMiddleware([AuthGuard])
   public async addItem(@User() targetUser: TargetUser, @Body() body: AddCartItemRequest) {
     const [cart, product] = await Promise.all([
       this.cartService.findOne(targetUser.id),
@@ -48,7 +48,7 @@ export class CartControllerV1 {
   }
 
   @Delete('items/:itemId')
-  @UseMiddleware(AuthGuard)
+  @UseMiddleware([AuthGuard])
   public async removeItem(@User() targetUser: TargetUser, @Param('itemId') itemId: string) {
     const cart = await this.cartService.findOne(targetUser.id);
     if (!cart) {
@@ -59,7 +59,7 @@ export class CartControllerV1 {
   }
 
   @Patch('items/:itemId')
-  @UseMiddleware(AuthGuard)
+  @UseMiddleware([AuthGuard])
   public async updateItemQuantity(
     @User() targetUser: TargetUser,
     @Param('itemId') itemId: string,

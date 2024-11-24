@@ -3,7 +3,10 @@ import style from './product-image.module.scss';
 import { Carousel } from '../../components/carousel';
 import { forEach, map, pipe } from '@fxts/core';
 
-export class PrimarySelected extends CustomEventWithDetail<{ id: number | string }> {}
+export class RepresentativeSelected extends CustomEventWithDetail<{ id: number | string }> {}
+export class RepresentativeChangedEvent extends CustomEventWithDetail<{
+  src: string | ArrayBuffer | null;
+}> {}
 
 interface ProductImageProps {
   id: number | string;
@@ -41,7 +44,7 @@ export class ProductImage extends View<ProductImageProps> {
     }
 
     // 이미지가 primary로 선택되어 있지 않을 때, primary로 선택하고 이벤트 발생
-    this.dispatchEvent(PrimarySelected, {
+    this.dispatchEvent(RepresentativeSelected, {
       bubbles: true,
       detail: { id: this.data.id },
     });
@@ -68,11 +71,12 @@ export class ProductImage extends View<ProductImageProps> {
 
 export class ImageList extends Carousel<ProductImageProps, ProductImage> {
   public constructor(private readonly images: ProductImage[]) {
+    console.log('ImageList', images);
     super({ children: images });
   }
 
-  @on(PrimarySelected)
-  private handlePrimarySelected(e: PrimarySelected) {
+  @on(RepresentativeSelected)
+  private handlePrimarySelected(e: RepresentativeSelected) {
     pipe(
       this.data.children,
       map((img) => ({
@@ -81,6 +85,13 @@ export class ImageList extends Carousel<ProductImageProps, ProductImage> {
       })),
       forEach(({ img, primary }) => (primary ? img.select() : img.unselect())),
     );
+
+    this.dispatchEvent(RepresentativeChangedEvent, {
+      bubbles: true,
+      detail: {
+        src: this.data.children.find((img) => img.data.primary)?.data.src ?? null,
+      },
+    });
   }
 
   get representativeIndex() {

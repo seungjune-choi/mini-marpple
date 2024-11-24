@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Query, UseMiddleware } from '@libs/decorators';
 import { ProductImageService, ProductService } from '@backend/usecase';
-import { BodyValidator } from '@libs/middlewares';
+import { AdminMiddleware, AuthGuard, BodyValidator } from '@libs/middlewares';
 import { ResponseEntity } from '@libs/rest';
 import { HttpException, NotFoundException } from '@libs/exceptions/http';
 import { HttpStatus } from '@libs/enums';
@@ -14,6 +14,7 @@ export class ProductControllerV1 {
     private readonly productImageService: ProductImageService,
   ) {}
 
+  @UseMiddleware([AuthGuard, AdminMiddleware])
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return await this.productService
@@ -41,7 +42,7 @@ export class ProductControllerV1 {
       .then((res) => ResponseEntity.ok(FindManyProductResponse.from(res, limit)));
   }
 
-  @UseMiddleware(BodyValidator(CreateProductRequest))
+  @UseMiddleware([AdminMiddleware, BodyValidator(CreateProductRequest)])
   @Post()
   async create(@Body() request: CreateProductRequest) {
     // 대표 이미지가 없을 경우 첫 번째 이미지를 대표 이미지로 설정
@@ -52,7 +53,7 @@ export class ProductControllerV1 {
     return await this.productService.create(request.toEntity(images)).then(ResponseEntity.created);
   }
 
-  @UseMiddleware(BodyValidator(UpdateProductRequest))
+  @UseMiddleware([AdminMiddleware, BodyValidator(UpdateProductRequest)])
   @Put(':id')
   async update(@Param('id') id: number, @Body() request: UpdateProductRequest) {
     const product = await this.productService.findOne(id);

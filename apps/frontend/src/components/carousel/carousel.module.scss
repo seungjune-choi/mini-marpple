@@ -1,13 +1,11 @@
 .carousel-container {
   position: relative;
-  // max-width: 50%;
-  min-height: 500px;
-  max-height: 500px;
+  min-height: 400px;
+  max-height: 400px;
   min-width: 100%;
   margin: 0 auto;
   overflow: hidden;
   border: 1px solid #ccc;
-  // background-color: #000;
   display: flex;
   justify-content: center;
   align-items: center;

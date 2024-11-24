@@ -28,6 +28,7 @@ export function Controller(path = ''): ClassDecorator {
         );
       }),
       forEach((req) => {
+        console.log(req.middlewares);
         appRouter[req.method](
           req.path,
           req.middlewares,

@@ -11,6 +11,7 @@ import { Button } from '../../components/button';
 import { fileToFormData } from '../../utils';
 import { fileRepository } from '../../repositories/files/file.repository.impl';
 import { productRepository } from '../../repositories/products';
+import { BindModel } from '../../experimental';
 
 interface ProductEditPageProps {
   categories: { id: number; name: string }[];
@@ -18,20 +19,25 @@ interface ProductEditPageProps {
 }
 
 export class ProductEditPage extends Page<ProductEditPageProps> {
+  private model = BindModel.from<Partial<Product>>({
+    ...this.data.product,
+  });
   private productMetadataEditor = new ProductMetadataEditor({
     categories: this.data.categories,
-    product: this.data.product,
+    model: this.model,
   });
-  private productImageEditor = new ProductImageEditor();
+  private productImageEditor = new ProductImageEditor({ model: this.model });
 
   protected override template(): Html {
     return html`
-      <div class="container horizontal">
-        <div style="width: 100%">${this.productImageEditor}</div>
-        <div
-          style="display:flex; flex-direction:column; background-color:'black';width: 100%; justify-content: center; align-items: center; gap: 1rem"
-        >
-          ${this.productMetadataEditor} ${new Button({ name: '등록', onClick: this.handleClick.bind(this) })}
+      <div class="container vertical">
+        <div class="container horizontal">
+          <div style="width: 100%">${this.productImageEditor}</div>
+          <div
+            style="display:flex; flex-direction:column; background-color:'black';width: 100%; justify-content: center; align-items: center; gap: 1rem"
+          >
+            ${this.productMetadataEditor} ${new Button({ name: '등록', onClick: this.handleClick.bind(this) })}
+          </div>
         </div>
       </div>
     `;
@@ -79,9 +85,34 @@ export const productEditRenderHandler: RenderHandlerType<typeof ProductEditPage>
       };
 
       const params = req.query;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const categories = (req as any)?.categories;
 
-      res.send(new MetaView(createPage({ categories }), layoutData).toHtml());
+      const product = params.id ? await productRepository.findOne(+params.id, req.headers.cookie) : undefined;
+      console.log({ ...product, images: [product.representativeImage, ...product.optionalImages] });
+      res.send(
+        new MetaView(
+          createPage({
+            categories,
+            product: {
+              ...product,
+              images: [
+                {
+                  id: product.representativeImage?.id,
+                  url: product.representativeImage?.url,
+                  isRepresentative: true,
+                },
+                ...product.optionalImages.map((img) => ({
+                  id: img.id,
+                  url: img.url,
+                  isRepresentative: false,
+                })),
+              ],
+            },
+          }),
+          layoutData,
+        ).toHtml(),
+      );
     })().catch((error) => {
       console.error(error);
       res.status(500).send('Internal Server error');

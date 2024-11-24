@@ -60,11 +60,11 @@ export class FindOneProductResponse {
       updatedAt: entity.updatedAt!.toISOString(),
       representativeImage: {
         id: representativeImage.id!,
-        url: representativeImage.path, // TODO: change to url
+        url: `http://localhost:3000/${representativeImage.path}`,
       },
       optionalImages: optionalImages.map((image) => ({
         id: image.id!,
-        url: image.path, // TODO: change to url
+        url: `http://localhost:3000/${image.path}`,
       })),
     });
   }

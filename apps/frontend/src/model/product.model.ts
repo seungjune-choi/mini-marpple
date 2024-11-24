@@ -1,5 +1,5 @@
 export interface Product {
-  id: string;
+  id: number;
   name: string;
   price: number;
   description: string;
@@ -9,8 +9,8 @@ export interface Product {
   createdAt: Date;
   updatedAt: Date;
   images: {
-    id: string;
-    src: string;
+    id: number;
+    url: string;
     isRepresentative: boolean;
   }[];
 }
@@ -20,7 +20,7 @@ export type ProductBrief = Pick<
   'id' | 'createdAt' | 'updatedAt' | 'description' | 'hidden' | 'name' | 'price'
 > & {
   representativeImage: {
-    id: string;
+    id: number;
     url: string;
   };
 };
