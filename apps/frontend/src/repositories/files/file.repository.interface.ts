@@ -1,3 +1,3 @@
 export interface IFileRepository {
-  uploadImage(formData: FormData): Promise<{ id: number }>;
+  uploadImage(formData: FormData): Promise<{ id: number; src: string }>;
 }

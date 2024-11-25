@@ -15,11 +15,7 @@ export interface InputProps<T = InputType> {
    * @default ''
    */
   value?: T extends 'number' ? number : string;
-  maxLength?: number;
-  minLength?: number;
-  required?: boolean;
-  min?: T extends 'number' ? number : never;
-  max?: T extends 'number' ? number : never;
+
   validate?: (value: string) => boolean;
   errorMessages?: string;
 }
@@ -36,11 +32,6 @@ export class Input extends View<InputProps> {
           type="${this.data.type}"
           title="test"
           value="${this.data.value ?? ''}"
-          ${this.data.maxLength ? `maxlength="${this.data.maxLength}"` : ''}
-          ${this.data.minLength ? `minlength="${this.data.minLength}"` : ''}
-          ${this.data.required ? 'required' : ''}
-          ${this.data.min ? `min="${this.data.min}"` : ''}
-          ${this.data.max ? `max="${this.data.max}"` : ''}
           placeholder="${this.data.placeholder ?? ''}"
         />
         <p id="${this.data.name}-error-message" class="${style['error-message']}"></p>
@@ -68,8 +59,7 @@ export class Input extends View<InputProps> {
   }
 
   public get isValid() {
-    const value = this.value;
-    return (!this.data.validate || this.data.validate(value)) && this.data.required ? !!value : true;
+    return this.value && this.data.validate ? this.data.validate(this.value) : true;
   }
 
   public get value() {

@@ -52,8 +52,9 @@ export class Carousel<T extends { id: number | string }, IV extends View<T>> ext
     return this._currentIndex;
   }
 
-  addChild(child: IV[]) {
-    this.data.children = [...this.data.children, ...child];
+  // TODO: set이 아니라 add로 해야하는데, 복잡도가 높아서 일단 set으로 구현
+  setChild(child: IV[]) {
+    this.data.children = [...child];
     this.redraw();
   }
 }

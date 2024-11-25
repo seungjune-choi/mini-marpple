@@ -23,7 +23,7 @@ export class SideBar extends View<SideBarProps> {
           </ul>
         </nav>
         <div class="${style['bottom-menu']}">
-          <a href="/product-edit">Edit product</a>
+          <a href="/admin/products">Edit product</a>
         </div>
       </div>
     `;

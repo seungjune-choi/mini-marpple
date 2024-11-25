@@ -149,8 +149,7 @@ export class ProductRepository {
           UPDATE products
             ${this.dataSource.$set(this.#productToPlain(product))}
           WHERE
-            id = ${product.id},
-            updated_at = NOW()
+            id = ${product.id} 
           RETURNING *`.then(([product]) => this.#plainToProduct(product));
 
       // update images
@@ -174,7 +173,7 @@ export class ProductRepository {
             is_representative = FALSE
         WHERE 
             product_id = ${updatedProduct.id!}`;
-
+      console.log('first');
       await tx.$query`
         UPDATE 
             product_images
@@ -187,7 +186,7 @@ export class ProductRepository {
               'id',
               product.images.map((i) => i.id!),
             )}`;
-
+      console.log('second');
       if (imageToDelete.length) {
         await tx.$query`
           DELETE 
@@ -196,7 +195,7 @@ export class ProductRepository {
           WHERE
             ${this.dataSource.$in('id', imageToDelete)}`;
       }
-
+      console.log('third');
       // reload images
       updatedProduct.images = await tx.$query<ProductImageScheme>`
         SELECT * FROM product_images WHERE product_id = ${updatedProduct.id!}`.then((images) =>

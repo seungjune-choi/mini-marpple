@@ -10,7 +10,7 @@ export interface Product {
   updatedAt: Date;
   images: {
     id: number;
-    url: string;
+    src: string | File;
     isRepresentative: boolean;
   }[];
 }

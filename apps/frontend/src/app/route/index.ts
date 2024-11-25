@@ -2,7 +2,7 @@ import { createRouter } from '@rune-ts/server';
 import { MainRoute } from '../../pages/main';
 import { SubRoute } from '../../pages/sub';
 import { CartRoute } from '../../pages/cart';
-import { ProductEditRoute, ProductListRoute } from '../../pages/products';
+import { AdminProductListRoute, ProductEditRoute, ProductListRoute } from '../../pages/products';
 import { OrderRoute } from '../../pages/orders';
 
 type RouterType = typeof MainRoute &
@@ -10,6 +10,7 @@ type RouterType = typeof MainRoute &
   typeof CartRoute &
   typeof ProductEditRoute &
   typeof ProductListRoute &
+  typeof AdminProductListRoute &
   typeof OrderRoute;
 
 export const ClientRouter = createRouter<RouterType>({
@@ -18,5 +19,6 @@ export const ClientRouter = createRouter<RouterType>({
   ...CartRoute,
   ...ProductEditRoute,
   ...ProductListRoute,
+  ...AdminProductListRoute,
   ...OrderRoute,
 });

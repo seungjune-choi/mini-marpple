@@ -8,12 +8,12 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 export class ProductImageRepository {
   constructor(@Inject(DATA_SOURCE) private readonly dataSource: DataSource) {}
 
-  create = (image: ProductImage): Promise<{ id: number }> =>
-    this.dataSource.$query<{ id: number }>`
+  create = (image: ProductImage): Promise<{ id: number; path: string }> =>
+    this.dataSource.$query<{ id: number; path: string }>`
       INSERT INTO 
         product_images 
       ${this.dataSource.$values([instanceToPlain(image, { exposeUnsetFields: false })])} 
-      RETURNING id
+      RETURNING id, path
       `.then(([result]) => result);
 
   findManyByIds = (ids: number[]): Promise<ProductImage[]> => {

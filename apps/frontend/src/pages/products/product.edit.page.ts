@@ -11,7 +11,7 @@ import { Button } from '../../components/button';
 import { fileToFormData } from '../../utils';
 import { fileRepository } from '../../repositories/files/file.repository.impl';
 import { productRepository } from '../../repositories/products';
-import { BindModel } from '../../experimental';
+import { ProductBindModel } from '../../experimental/product.bind.model';
 
 interface ProductEditPageProps {
   categories: { id: number; name: string }[];
@@ -19,9 +19,7 @@ interface ProductEditPageProps {
 }
 
 export class ProductEditPage extends Page<ProductEditPageProps> {
-  private model = BindModel.from<Partial<Product>>({
-    ...this.data.product,
-  });
+  private model = new ProductBindModel(this.data.product);
   private productMetadataEditor = new ProductMetadataEditor({
     categories: this.data.categories,
     model: this.model,
@@ -36,24 +34,31 @@ export class ProductEditPage extends Page<ProductEditPageProps> {
           <div
             style="display:flex; flex-direction:column; background-color:'black';width: 100%; justify-content: center; align-items: center; gap: 1rem"
           >
-            ${this.productMetadataEditor} ${new Button({ name: '등록', onClick: this.handleClick.bind(this) })}
+            ${this.productMetadataEditor} ${new Button({ name: '등록', onClick: this.handleEdit.bind(this) })}
           </div>
         </div>
       </div>
     `;
   }
 
-  private async handleClick() {
-    if (!this.productMetadataEditor.validate()) {
+  // TODO: 에러 핸들링 추가할 것
+  private async handleEdit() {
+    // TODO 에러 메시지 처리
+    if (!this.model.validate().success) {
       alert('입력값을 확인해주세요.');
       return;
     }
 
     // 이미지부터 업로드한 후
-    const images = await this.uploadImages();
+    await this.uploadImages();
 
-    // 이미지 업로드가 완료되면 상품 정보를 업로드
-    const res = await productRepository.create({ ...this.productMetadataEditor.value, images });
+    // 이미지 업로드가 완료되면 상품 정보를 업로드 or 수정
+    const method = this.model.value.id ? 'update' : 'create';
+    const res = await productRepository[method]({
+      id: this.model.value.id!,
+      ...this.model.value,
+    });
+
     if (res) {
       alert('상품이 등록되었습니다.');
       window.location.href = '/';
@@ -61,15 +66,27 @@ export class ProductEditPage extends Page<ProductEditPageProps> {
   }
 
   private async uploadImages() {
-    const { images, representativeIndex } = this.productImageEditor.value;
+    const representativeIndex = this.model.value.images!.findIndex((img) => img.isRepresentative);
 
-    return await fx(images)
-      .filter((img) => !!img)
+    return await fx(this.model.value.images!)
+      .filter((img) => !!img && typeof img.src !== 'string')
+      .map((img) => img.src as File)
       .map(fileToFormData('image'))
       .toAsync()
       .map((form) => fileRepository.uploadImage(form))
       .toArray()
-      .then((res) => res.map(({ id }, index) => ({ id, isRepresentative: index === representativeIndex })));
+      .then(
+        (res) =>
+          res.length &&
+          this.model.update(
+            'images',
+            res.map(({ id, src }, index) => ({
+              id,
+              src,
+              isRepresentative: index === representativeIndex,
+            })),
+          ),
+      );
   }
 }
 
@@ -89,22 +106,22 @@ export const productEditRenderHandler: RenderHandlerType<typeof ProductEditPage>
       const categories = (req as any)?.categories;
 
       const product = params.id ? await productRepository.findOne(+params.id, req.headers.cookie) : undefined;
-      console.log({ ...product, images: [product.representativeImage, ...product.optionalImages] });
+
       res.send(
         new MetaView(
           createPage({
             categories,
-            product: {
+            product: product && {
               ...product,
               images: [
                 {
                   id: product.representativeImage?.id,
-                  url: product.representativeImage?.url,
+                  src: product.representativeImage?.src,
                   isRepresentative: true,
                 },
                 ...product.optionalImages.map((img) => ({
                   id: img.id,
-                  url: img.url,
+                  src: img.src,
                   isRepresentative: false,
                 })),
               ],

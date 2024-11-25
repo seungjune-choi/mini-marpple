@@ -112,6 +112,7 @@ export class Product extends BaseEntity<number> {
   }
 
   private _validateImages() {
+    console.log(this.images);
     const res = this.images.filter((image) => image.isRepresentative).length === 1;
     if (!res) {
       throw new BadRequestException('There should be only one representative image');

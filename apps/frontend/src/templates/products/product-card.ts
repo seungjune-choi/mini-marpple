@@ -3,6 +3,7 @@ import type { BindModel } from '../../experimental';
 import type { Product } from '../../model';
 import style from './product-list.module.scss';
 import { Card } from '../../components/card';
+import { readFile } from '../../utils';
 
 export interface ProductCardProps {
   model: BindModel<Partial<Product>>;
@@ -11,12 +12,12 @@ export interface ProductCardProps {
 export class ProductCard extends View<ProductCardProps> {
   protected override template(): Html {
     return html`
-      <div style="width:300px">
+      <div style="width: 300px">
         ${new Card({
           body: html`
             <div class="${style['product-brief-card-body']}">
               ${this.data.model.value?.images?.at(0)
-                ? html`<img src="${this.data.model.value.images?.at(0)?.url}" alt="${this.data.model.value.name}" />`
+                ? html`<img alt="${this.data.model.value.name}" src="${this.data.model.value?.images?.at(0)?.src}" />`
                 : html`<img src="https://via.placeholder.com/300" alt="placeholder" />`}
             </div>
           `,
@@ -37,10 +38,16 @@ export class ProductCard extends View<ProductCardProps> {
       'price',
       (v) => (this.element().querySelector('#price')!.innerHTML = v?.toLocaleString('ko-KR') ?? ''),
     );
-    this.data.model.bind('images', (v) => {
+    this.data.model.bind('images', async (v) => {
       if (!v) return;
       const representativeImage = v.find((img) => img.isRepresentative) ?? v.at(0);
-      this.element().querySelector('img')!.src = representativeImage?.url ?? '';
+      const imageSrc =
+        typeof representativeImage?.src === 'string'
+          ? representativeImage.src
+          : await readFile(representativeImage!.src);
+
+      console.log('ProductCart', imageSrc);
+      this.element().querySelector('img')!.src = imageSrc as string;
     });
   }
 }

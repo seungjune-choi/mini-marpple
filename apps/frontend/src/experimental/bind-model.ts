@@ -38,11 +38,7 @@ export class BindModel<T extends Record<Target, any>> {
     }
   }
 
-  static from<T extends Record<Target, any>>(initialValue = {} as T) {
-    return new BindModel<T>(initialValue);
-  }
-
-  static empty<T extends Record<Target, any>>() {
-    return new BindModel<T>();
+  validate<K extends keyof T>(key?: K) {
+    throw new Error('Not implemented');
   }
 }

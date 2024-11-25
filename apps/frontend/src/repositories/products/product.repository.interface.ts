@@ -10,11 +10,28 @@ export interface CreateProductRequest {
   images: { id: number; isRepresentative: boolean }[];
 }
 
+export interface UpdateProductRequest extends CreateProductRequest {
+  id: number;
+}
+
+export type FindOneProductResponse = Omit<Product, 'images'> & {
+  representativeImage: {
+    id: number;
+    url: string;
+  };
+  optionalImages: {
+    id: number;
+    url: string;
+  }[];
+};
+
 export interface IProductRepository {
+  findOne(id: number, cookie?: string): Promise<FindOneProductResponse>;
   findAll(query: {
     limit?: number;
     cursor?: number;
     categoryId?: number;
   }): Promise<CursorBasedPaginationResponse<ProductBrief>>;
   create(request: CreateProductRequest): Promise<Product>;
+  update(request: UpdateProductRequest): Promise<Product>;
 }

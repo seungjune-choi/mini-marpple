@@ -13,11 +13,11 @@ import { Product } from 'src/core';
  *   "updatedAt": string,
  *   "representativeImage": {
  *      "id": number,
- *      "url": string,
+ *      "src": string,
  *   },
  *   "optionalImages": {
  *      "id": number,
- *      "url": string,
+ *      "src": string,
  *   }[],
  * }
  */
@@ -33,11 +33,11 @@ export class FindOneProductResponse {
   updatedAt!: string;
   representativeImage!: {
     id: number;
-    url: string;
+    src: string;
   };
   optionalImages!: {
     id: number;
-    url: string;
+    src: string;
   }[];
 
   constructor(partial: Partial<FindOneProductResponse>) {
@@ -60,11 +60,11 @@ export class FindOneProductResponse {
       updatedAt: entity.updatedAt!.toISOString(),
       representativeImage: {
         id: representativeImage.id!,
-        url: `http://localhost:3000/${representativeImage.path}`,
+        src: `http://localhost:3000/${representativeImage.path}`,
       },
       optionalImages: optionalImages.map((image) => ({
         id: image.id!,
-        url: `http://localhost:3000/${image.path}`,
+        src: `http://localhost:3000/${image.path}`,
       })),
     });
   }

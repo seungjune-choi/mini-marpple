@@ -5,15 +5,15 @@ import { forEach, map, pipe } from '@fxts/core';
 
 export class RepresentativeSelected extends CustomEventWithDetail<{ id: number | string }> {}
 export class RepresentativeChangedEvent extends CustomEventWithDetail<{
-  src: string | ArrayBuffer | null;
+  id: number | string;
 }> {}
 
-interface ProductImageProps {
+export interface ProductImageProps {
   id: number | string;
-  src: string | ArrayBuffer | null;
+  src: string | File;
   alt: string;
   objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
-  primary?: boolean;
+  representative?: boolean;
 }
 
 export class ProductImage extends View<ProductImageProps> {
@@ -21,13 +21,15 @@ export class ProductImage extends View<ProductImageProps> {
     return html`
       <div class="${style['product-image-container']}">
         <img
-          class="${style.img} ${this.data.primary ? style.primary : ''}"
+          class="${style.img} ${this.data.representative ? style.primary : ''}"
           src="${this.data.src}"
           alt="${this.data.alt}"
           width="100%"
           object-fit="${this.data.objectFit ?? 'contain'}"
         />
-        <span class="${style['primary-label']} ${this.data.primary ? '' : style.hidden}"> ${'대표 이미지'} </span>
+        <span class="${style['primary-label']} ${this.data.representative ? '' : style.hidden}">
+          ${'대표 이미지'}
+        </span>
       </div>
     `;
   }
@@ -37,9 +39,9 @@ export class ProductImage extends View<ProductImageProps> {
     const span = this.element().querySelector(`.${style['primary-label']}`)!;
 
     // 이미지가 primary로 선택되어 있을 때, 다시 클릭하면 primary 해제만 하고 이벤트를 발생시키지 않음
-    if (this.data.primary) {
+    if (this.data.representative) {
       span.classList.toggle(style.hidden);
-      this.data.primary = !this.data.primary;
+      this.data.representative = !this.data.representative;
       return;
     }
 
@@ -61,7 +63,7 @@ export class ProductImage extends View<ProductImageProps> {
   private togglePrimary(isPrimary: boolean) {
     const span = this.element().querySelector(`.${style['primary-label']}`)!;
     span.classList.toggle(style.hidden, !isPrimary);
-    this.data.primary = isPrimary;
+    this.data.representative = isPrimary;
   }
 
   public get id() {
@@ -71,7 +73,6 @@ export class ProductImage extends View<ProductImageProps> {
 
 export class ImageList extends Carousel<ProductImageProps, ProductImage> {
   public constructor(private readonly images: ProductImage[]) {
-    console.log('ImageList', images);
     super({ children: images });
   }
 
@@ -88,13 +89,11 @@ export class ImageList extends Carousel<ProductImageProps, ProductImage> {
 
     this.dispatchEvent(RepresentativeChangedEvent, {
       bubbles: true,
-      detail: {
-        src: this.data.children.find((img) => img.data.primary)?.data.src ?? null,
-      },
+      detail: { id: e.detail.id },
     });
   }
 
   get representativeIndex() {
-    return this.data.children.findIndex((img) => img.data.primary);
+    return this.data.children.findIndex((img) => img.data.representative);
   }
 }

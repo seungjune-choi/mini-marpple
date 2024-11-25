@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, Put, Query, UseMiddleware } from '@
 import { ProductImageService, ProductService } from '@backend/usecase';
 import { AdminMiddleware, AuthGuard, BodyValidator } from '@libs/middlewares';
 import { ResponseEntity } from '@libs/rest';
-import { HttpException, NotFoundException } from '@libs/exceptions/http';
+import { HttpException, InternalServerErrorException, NotFoundException } from '@libs/exceptions/http';
 import { HttpStatus } from '@libs/enums';
 import { CreateProductRequest, UpdateProductRequest } from './dto/request';
 import { FindOneProductResponse, FindManyProductResponse } from './dto/response';
@@ -45,12 +45,17 @@ export class ProductControllerV1 {
   @UseMiddleware([AdminMiddleware, BodyValidator(CreateProductRequest)])
   @Post()
   async create(@Body() request: CreateProductRequest) {
-    // 대표 이미지가 없을 경우 첫 번째 이미지를 대표 이미지로 설정
-    const representativeImageId = request.images.find((image) => image.isRepresentative)?.id ?? request.images[0].id;
-    const images = await this.productImageService.findMany(request.images.map((image) => image.id));
-    images.find((image) => image.id === representativeImageId)?.setRepresentative(true);
+    try {
+      // 대표 이미지가 없을 경우 첫 번째 이미지를 대표 이미지로 설정
+      const representativeImageId = request.images.find((image) => image.isRepresentative)?.id ?? request.images[0].id;
+      const images = await this.productImageService.findMany(request.images.map((image) => image.id));
+      images.find((image) => image.id === representativeImageId)?.setRepresentative(true);
 
-    return await this.productService.create(request.toEntity(images)).then(ResponseEntity.created);
+      return await this.productService.create(request.toEntity(images)).then(ResponseEntity.created);
+    } catch (e) {
+      console.error(e);
+      throw new InternalServerErrorException('상품 생성 중 오류가 발생했습니다.');
+    }
   }
 
   @UseMiddleware([AdminMiddleware, BodyValidator(UpdateProductRequest)])
@@ -63,8 +68,8 @@ export class ProductControllerV1 {
 
     const representativeImageId = request.images.find((image) => image.isRepresentative)?.id ?? request.images[0].id;
     const images = await this.productImageService.findMany(request.images.map((image) => image.id));
-    images.find((image) => image.id === representativeImageId)?.setRepresentative(true);
-
+    images.forEach((image) => image.setRepresentative(image.id === representativeImageId));
+    console.log('images', images);
     return await this.productService.update(product, request.toCoreDto(images)).then(ResponseEntity.ok);
   }
 }

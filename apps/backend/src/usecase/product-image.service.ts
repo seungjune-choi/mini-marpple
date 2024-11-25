@@ -6,7 +6,7 @@ import { ProductImage } from 'src/core';
 export class ProductImageService {
   constructor(private readonly productImageRepository: ProductImageRepository) {}
 
-  async create(path: string): Promise<{ id: number }> {
+  async create(path: string): Promise<{ id: number; path: string }> {
     const image = ProductImage.new({
       path,
       isRepresentative: false,
