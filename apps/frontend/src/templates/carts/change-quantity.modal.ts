@@ -1,6 +1,6 @@
 import { html, on, View } from 'rune-ts';
 import type { CartItem } from '../../model';
-import { CloseModal, Modal } from '../../components';
+import { ModalClosedEvent, Modal } from '../../components';
 import { ChangeQuantityForm } from './change-quantity.form';
 
 export interface ChangeQuantityModalProps {
@@ -19,7 +19,7 @@ export class ChangeQuantityModal extends View<ChangeQuantityModalProps> {
 
   public open = () => this.modal.open();
 
-  @on(CloseModal)
+  @on(ModalClosedEvent)
   private handleCloseModal() {
     this.modal.close();
   }

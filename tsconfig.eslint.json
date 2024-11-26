@@ -9,5 +9,6 @@
     // whatever paths you intend to lint
     "apps",
     "packages",
+    "./global.d.ts"
   ]
 }

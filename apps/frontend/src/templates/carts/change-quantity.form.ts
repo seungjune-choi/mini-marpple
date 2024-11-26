@@ -3,7 +3,7 @@ import type { CartItem } from '../../model';
 import style from './change-quantity.module.scss';
 import { Button } from '../../components/button';
 import { CountChangedEvent, Counter } from '../../components/counter';
-import { CloseModal } from '../../components';
+import { ModalClosedEvent } from '../../components';
 import { cartRepository } from '../../repositories/carts';
 import { CartChangedEvent } from './cart-item-list';
 
@@ -51,7 +51,7 @@ export class ChangeQuantityForm extends View<ChangeQuantityProps> {
   }
 
   private handleCancel() {
-    this.dispatchEvent(CloseModal, { bubbles: true });
+    this.dispatchEvent(ModalClosedEvent, { bubbles: true });
   }
 
   private async handleChange() {
@@ -61,6 +61,6 @@ export class ChangeQuantityForm extends View<ChangeQuantityProps> {
     });
 
     this.dispatchEvent(CartChangedEvent, { bubbles: true });
-    this.dispatchEvent(CloseModal, { bubbles: true });
+    this.dispatchEvent(ModalClosedEvent, { bubbles: true });
   }
 }

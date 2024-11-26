@@ -1,19 +1,15 @@
-import { html } from 'rune-ts';
-import { Box, CloseModal, Modal } from '../../components';
+import { ModalClosedEvent, Modal } from '../../components';
 import { SignInForm } from './sign-in.form';
-import { UserRepository } from '../../repositories/users/user.repository.impl';
+import { userRepository } from '../../repositories/users';
+import { on } from 'rune-ts';
 
-export class SignInModal extends Box {
-  private repository = new UserRepository();
-  private readonly modal = new Modal({ title: '로그인', contents: [new SignInForm(this.repository)] });
-
-  override template() {
-    return html`<div>${this.modal}</div>`;
+export class SignInModal extends Modal {
+  constructor() {
+    super({ title: 'Sign In', contents: [new SignInForm(userRepository)] });
   }
 
-  public open = () => this.modal.open();
-
-  protected override onRender(): void {
-    this.addEventListener(CloseModal, () => this.modal.close());
+  @on(ModalClosedEvent)
+  private handleClose() {
+    this.close();
   }
 }

@@ -1,6 +1,4 @@
-import { html, on, Page, type Html } from 'rune-ts';
-import { Header, type HeaderProps } from '../../templates/header';
-import { SideBar, type SideBarProps } from '../../templates/side-bar';
+import { html, on, View, type Html } from 'rune-ts';
 import type { RenderHandlerType } from '../../../../../packages/types/renderHandlerType';
 import { type LayoutData, MetaView } from '@rune-ts/server';
 import { cartRepository } from '../../repositories/carts';
@@ -8,22 +6,18 @@ import type { Cart } from '../../model';
 import { CartChangedEvent, CartItemList, CartSummaryTable, OrderEvent } from '../../templates/carts';
 import { orderRepository } from '../../repositories/orders';
 import { paymentRepository } from '../../repositories/payments';
+import { BasePage, type BasePageProps } from '../base.page';
 
-interface CartPageProps extends HeaderProps, SideBarProps {
+interface CartPageProps extends BasePageProps {
   cart: Cart;
 }
 
-export class CartPage extends Page<CartPageProps> {
-  private header = new Header({ isSigned: this.data.isSigned });
-  private sideBar = new SideBar({ categories: this.data.categories });
+export class CartPage extends BasePage<CartPageProps> {
   private cartItemList = new CartItemList({ items: this.data.cart.items });
   private cartSummaryTable = new CartSummaryTable({ summary: this.data.cart.summary });
 
-  protected override template(): Html {
-    return html`<div>
-      ${this.header} ${this.sideBar}
-      <div class="content horizontal">${this.cartItemList} ${this.cartSummaryTable}</div>
-    </div>`;
+  protected override content(): Html | View {
+    return html` <div style="display: flex; flex-direction: row">${this.cartItemList} ${this.cartSummaryTable}</div>`;
   }
 
   @on(CartChangedEvent)
@@ -74,10 +68,10 @@ export const cartRenderHandler: RenderHandlerType<typeof CartPage> = (createCurr
           return res.status(404).send('Cart not found');
         }
       }
-      const categories = req.categories;
-      const isSigned = req.isSigned;
 
-      res.send(new MetaView(createCurrentPage({ cart, categories, isSigned }), layoutData).toHtml());
+      res.send(
+        new MetaView(createCurrentPage({ cart, categories: req.categories, user: req.user }), layoutData).toHtml(),
+      );
     })().catch((error) => {
       console.error(error);
       res.status(500).send('Internal Server Error');

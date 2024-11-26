@@ -7,11 +7,18 @@ export class UserRepository implements IUserRepository {
     return baseClient.post<ResponseEntity<TargetUser>>('/users/v1/sign-in', { ...request }).then((res) => res.data);
   }
 
+  signOut(): Promise<ResponseEntity<void>> {
+    return baseClient.post<ResponseEntity<void>>('/users/v1/sign-out').then((res) => res.data);
+  }
+
   me(cookie?: string): Promise<TargetUser | null> {
     return baseClient
-      .post<ResponseEntity<TargetUser>>('/users/v1/me', { ...((cookie && { headers: { Cookie: cookie } }) ?? {}) })
+      .get<ResponseEntity<TargetUser>>('/users/v1/me', { ...((cookie && { headers: { Cookie: cookie } }) ?? {}) })
       .then((res) => res.data.data)
-      .catch(() => null);
+      .catch((e) => {
+        console.error(e);
+        return null;
+      });
   }
 }
 

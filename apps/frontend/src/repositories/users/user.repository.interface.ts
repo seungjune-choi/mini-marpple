@@ -7,5 +7,6 @@ export type SignInResponse = ResponseEntity<TargetUser>;
 
 export interface IUserRepository {
   signIn(request: SignInRequest): Promise<SignInResponse>;
+  signOut(): Promise<ResponseEntity<void>>;
   me(cookie?: string): Promise<TargetUser | null>;
 }

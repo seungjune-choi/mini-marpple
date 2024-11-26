@@ -4,8 +4,23 @@ import { ForbiddenException, InternalServerErrorException } from '@libs/exceptio
 import type { Request, Response } from 'express';
 import { TargetUser } from '@backend/core';
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 @Injectable()
 export class AuthService {
+  signOut(req: Request, res: Response) {
+    // 로그아웃 처리
+    return new Promise<void>((resolve, reject) => {
+      req.session.destroy((err: unknown) => {
+        if (err) {
+          console.error(err);
+          reject(new InternalServerErrorException());
+        }
+        res.clearCookie('_sid_');
+        resolve();
+      });
+    });
+  }
+
   // 유저 인증
   async authenticate(req: Request, res: Response): Promise<TargetUser> {
     return new Promise((resolve, reject) => {

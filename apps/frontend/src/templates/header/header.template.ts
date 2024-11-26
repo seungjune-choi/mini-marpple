@@ -1,11 +1,13 @@
 import { CustomEventWithoutDetail, html, on, View } from 'rune-ts';
 import style from './header.module.scss';
 import { SignInModal } from '../sign-in';
+import type { TargetUser } from '../../model';
+import { userRepository } from '../../repositories/users';
 
 export class SignInButtonClicked extends CustomEventWithoutDetail {}
 
 export interface HeaderProps {
-  isSigned: boolean;
+  user: TargetUser | null;
 }
 
 export class Header extends View<HeaderProps> {
@@ -18,20 +20,40 @@ export class Header extends View<HeaderProps> {
           <div class="${style.logo}">
             <a href="/">MiNi MARPPLE</a>
           </div>
-          <div class="${style.buttons}">
-            <button id="cart" data-location="/carts" class="location ${style.button}">
-              <i class="fas fa-shopping-cart"></i>
-            </button>
-            ${!this.data.isSigned
-              ? html`<button id="auth" class="${style.button}"><i class="fas fa-user"></i></button>`
-              : html`<button id="order" data-location="/orders" class="location ${style.button}">
-                  <i class="fas fa-receipt"></i>
-                </button>`}
-          </div>
+          <div class="${style.actions}">${this.renderActions()}</div>
         </header>
         ${this.modal}
       </div>
     `;
+  }
+
+  private renderActions() {
+    const signed = !!this.data.user;
+    const isAdmin = !!this.data.user?.isAdmin;
+
+    if (!signed) {
+      return html`<button id="auth"><i class="fas fa-user"></i></button>`;
+    }
+
+    if (isAdmin) {
+      return html`<button id="sign-out"><i class="fas fa-sign-out"></i></button>`;
+    }
+
+    return html`
+      <button id="cart" data-location="/carts" class="location">
+        <i class="fas fa-shopping-cart"></i>
+      </button>
+      <button id="order" data-location="/orders" class="location">
+        <i class="fas fa-receipt"></i>
+      </button>
+      <button id="sign-out"><i class="fas fa-sign-out"></i></button>
+    `;
+  }
+
+  @on('click', '#sign-out')
+  private async onSignOutClick() {
+    await userRepository.signOut();
+    window.location.href = '/';
   }
 
   @on('click', '#auth')
@@ -48,5 +70,10 @@ export class Header extends View<HeaderProps> {
     } else {
       alert('Not implemented yet');
     }
+  }
+
+  rerender(props: HeaderProps) {
+    this.data.user = props.user;
+    this.redraw();
   }
 }

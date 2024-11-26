@@ -1,53 +1,45 @@
-import { Page, html } from 'rune-ts';
-import type { Product, ProductBrief, TargetUser } from '../../model';
-import { Header, type HeaderProps } from '../../templates/header';
+import type { Product, ProductBrief } from '../../model';
 import { AdminProductList } from '../../templates/products';
-import { SideBar, type SideBarProps } from '../../templates/side-bar';
 import { productRepository } from '../../repositories/products';
 import { MetaView } from '@rune-ts/server';
 import { fx } from '@fxts/core';
 import { BindModel } from '../../experimental';
 import { AdminProductCard } from '../../templates/products/admin.product.card';
+import { BasePage, type BasePageProps } from '../base.page';
 
-interface AdminProductListPageProps extends HeaderProps, SideBarProps {
+interface AdminProductListPageProps extends BasePageProps {
   items: ProductBrief[];
   cursor: number;
   categoryId?: number;
 }
 
-export class AdminProductListPage extends Page<AdminProductListPageProps> {
-  private header = new Header({ isSigned: this.data.isSigned });
-  private sideBar = new SideBar({ categories: this.data.categories });
+export class AdminProductListPage extends BasePage<AdminProductListPageProps> {
   private productListTemplate = new AdminProductList({
-    items: fx(this.data.items)
-      .map(
-        (i) =>
-          new AdminProductCard({
-            model: new BindModel<Partial<Product>>({
-              id: i.id,
-              name: i.name,
-              description: i.description,
-              price: i.price,
-              images: [
-                {
-                  id: i.representativeImage.id,
-                  src: i.representativeImage.url,
-                  isRepresentative: true,
-                },
-              ],
-            }),
-          }),
-      )
-      .toArray(),
+    items: fx(this.data.items).map(this.createCard.bind(this)).toArray(),
     categoryId: this.data.categoryId,
     cursor: this.data.cursor,
   });
 
-  override template() {
-    return html` <div>
-      ${this.header} ${this.sideBar}
-      <div class="content">${this.productListTemplate}</div>
-    </div>`;
+  override content() {
+    return this.productListTemplate;
+  }
+
+  private createCard(product: ProductBrief) {
+    return new AdminProductCard({
+      model: new BindModel<Partial<Product>>({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        images: [
+          {
+            id: product.representativeImage.id,
+            src: product.representativeImage.url,
+            isRepresentative: true,
+          },
+        ],
+      }),
+    });
   }
 }
 
@@ -62,16 +54,18 @@ export const adminProductListRenderHandler = (createCurrentPage) => {
         ...res.locals.layoutData,
       };
       const query = req.query;
-      const categories = req.categories;
-      const user: TargetUser | null = req.user;
-      console.log('user', user);
       const products = await productRepository.findAll({
         categoryId: query.categoryId,
       });
 
       res.send(
         new MetaView(
-          createCurrentPage({ items: products.items, cursor: products.cursor, isSigned: !!user, categories }),
+          createCurrentPage({
+            items: products.items,
+            cursor: products.cursor,
+            categories: req.categories,
+            user: req.user,
+          }),
           layoutData,
         ).toHtml(),
       );

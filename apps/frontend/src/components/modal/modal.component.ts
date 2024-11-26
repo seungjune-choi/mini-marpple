@@ -7,7 +7,7 @@ interface ModalProps {
   contents?: (View | Html)[];
 }
 
-export class CloseModal extends CustomEventWithoutDetail {}
+export class ModalClosedEvent extends CustomEventWithoutDetail {}
 
 export class Modal extends Box {
   constructor(private readonly props: ModalProps) {

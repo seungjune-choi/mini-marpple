@@ -1,10 +1,13 @@
-import { html } from 'rune-ts';
-import { Box, CloseModal } from '../../components';
+import { CustomEventWithDetail, html } from 'rune-ts';
+import { Box, ModalClosedEvent } from '../../components';
 import { Input } from '../../components/input';
 import { z } from 'zod';
 import style from './sign-in.module.scss';
 import type { IUserRepository } from '../../repositories/users';
 import { Button } from '../../components/button';
+import type { TargetUser } from '../../model';
+
+export class AfterSignInEvent extends CustomEventWithDetail<TargetUser> {}
 
 export class SignInForm extends Box {
   constructor(private readonly userRepository: IUserRepository) {
@@ -31,13 +34,12 @@ export class SignInForm extends Box {
     return html`
       <div class="${style['form-container']}">
         ${this.emailInput} ${this.passwordInput}
-        ${new Button({ id: 'sign-in', name: '로그인', variant: 'outlined', onClick: this.handleClick.bind(this) })}
+        ${new Button({ id: 'sign-in', name: '로그인', variant: 'outlined', onClick: this.handleSignin.bind(this) })}
       </div>
     `;
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
-  private async handleClick() {
+  private async handleSignin() {
     if (!this.emailInput.isValid || !this.emailInput.isValid) {
       this.clearInput();
       return;
@@ -49,9 +51,10 @@ export class SignInForm extends Box {
     });
 
     if (res.statusCode === 200) {
-      this.dispatchEvent(CloseModal, { bubbles: true });
-      console.log(res);
+      this.dispatchEvent(AfterSignInEvent, { bubbles: true, detail: res.data });
+      this.dispatchEvent(ModalClosedEvent, { bubbles: true });
     }
+    // TODO: handle error
 
     this.clearInput();
   }

@@ -16,13 +16,13 @@ export class UserControllerV1 {
   ) {}
 
   @Get('me')
-  @UseMiddleware(AuthGuard)
+  @UseMiddleware([AuthGuard])
   public me(@User() user: TargetUser) {
     return ResponseEntity.ok(user);
   }
 
   @Post('sign-in')
-  @UseMiddleware(BodyValidator(SignInRequest))
+  @UseMiddleware([BodyValidator(SignInRequest)])
   public async signIn(@Req() req: Request, @Res() res: Response) {
     const user = await this.authService.authenticate(req, res);
     await this.authService.signIn(req, user);
@@ -30,8 +30,13 @@ export class UserControllerV1 {
     return ResponseEntity.ok(user);
   }
 
+  @Post('sign-out')
+  public async signOut(@Req() req: Request, @Res() res: Response) {
+    return await this.authService.signOut(req, res).then(() => ResponseEntity.ok());
+  }
+
   @Post()
-  @UseMiddleware(BodyValidator(CreateUserRequest))
+  @UseMiddleware([BodyValidator(CreateUserRequest)])
   public async signUp(@Body() body: CreateUserRequest) {
     const exists = await this.userService.exists(body.email);
     if (exists) {

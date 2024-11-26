@@ -11,8 +11,8 @@ interface ProductListPageProps extends HeaderProps, SideBarProps {
 }
 
 export class ProductListPage extends Page<ProductListPageProps> {
-  private header = new Header({ isSigned: this.data.isSigned });
-  private sideBar = new SideBar({ categories: this.data.categories });
+  private header = new Header({ ...this.data });
+  private sideBar = new SideBar({ ...this.data });
   private productListTemplate = new ProductListTemplate(this.data.products);
 
   override template() {
@@ -36,12 +36,12 @@ export const productListRenderHandler = (createCurrentPage) => {
       const query = req.query;
       const categories = req.categories;
       const isSigned = req.isSigned;
-
+      const user = req.user;
       const products = await productRepository.findAll({
         categoryId: query.categoryId,
       });
 
-      res.send(new MetaView(createCurrentPage({ products, isSigned, categories }), layoutData).toHtml());
+      res.send(new MetaView(createCurrentPage({ products, isSigned, categories, user }), layoutData).toHtml());
     })().catch((error) => {
       console.error(error);
       res.status(500).send('Internal Server Error');
