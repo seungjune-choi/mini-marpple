@@ -1,10 +1,10 @@
 import { html, on, View } from 'rune-ts';
-import { Input } from '../../components/input';
-import { Select } from '../../components/select/select.component';
-import type { Product } from '../../model';
-import { SwitchView } from '../../components/toggle';
-import { ProductCard } from './product-card';
-import { ProductBindModel } from '../../experimental/product.bind.model';
+import { Input } from '../../../components/input';
+import { Select } from '../../../components/select/select.component';
+import { SwitchView } from '../../../components/toggle';
+import type { ProductBindModel } from '../../../experimental/product.bind.model';
+import type { Product } from '../../../model';
+import { ProductPreviewCard } from '../card';
 
 export interface ProductMetadataTemplateProps {
   categories: { id: number; name: string }[];
@@ -64,7 +64,7 @@ export class ProductMetadataEditor extends View<ProductMetadataTemplateProps> {
       <div class="form-group vertical">
         <div class="form-control vertical">
           <strong>미리보기</strong>
-          ${new ProductCard({ model: this.data.model })}
+          ${new ProductPreviewCard({ model: this.data.model })}
         </div>
         <div class="form-control horizontal">
           <div class="form-control" style="width:50%">${this.categorySelect}</div>

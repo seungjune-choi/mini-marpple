@@ -1,10 +1,10 @@
 import { html, on, View } from 'rune-ts';
-import { FileButton } from '../../components/button';
-import { ImageList, ProductImage, RepresentativeChangedEvent } from './product-image.component';
 import { fx, map, pipe, range, toArray, zip } from '@fxts/core';
-import type { BindModel } from '../../experimental';
-import type { Product } from '../../model';
-import { readFile } from '../../utils';
+import { FileButton } from '../../../components/button';
+import type { BindModel } from '../../../experimental';
+import type { Product } from '../../../model';
+import { readFile } from '../../../utils';
+import { ImageList, ProductImage, RepresentativeChangedEvent } from './product-image.component';
 
 export interface ProductImageEditorProps {
   model: BindModel<Partial<Product>>;
@@ -32,7 +32,7 @@ export class ProductImageEditor extends View<ProductImageEditorProps> {
     return html`
       <div class="form-group">
         <div class="form-control">${this.imagePreview}</div>
-        <div class="form-control">${this.button}</div>
+        <div class="form-control" style="margin-top: 20px">${this.button}</div>
       </div>
     `;
   }

@@ -17,6 +17,13 @@ export class CartPage extends BasePage<CartPageProps> {
   private cartSummaryTable = new CartSummaryTable({ summary: this.data.cart.summary });
 
   protected override content(): Html | View {
+    // TODO: 화면 꾸미기...
+    if (this.data.cart.items.length === 0) {
+      return html`<div class="container">
+        <h3>장바구니가 비어있습니다.</h3>
+      </div>`;
+    }
+
     return html` <div style="display: flex; flex-direction: row">${this.cartItemList} ${this.cartSummaryTable}</div>`;
   }
 
@@ -70,7 +77,15 @@ export const cartRenderHandler: RenderHandlerType<typeof CartPage> = (createCurr
       }
 
       res.send(
-        new MetaView(createCurrentPage({ cart, categories: req.categories, user: req.user }), layoutData).toHtml(),
+        new MetaView(
+          createCurrentPage({
+            cart,
+            categories: req.categories,
+            user: req.user,
+            role: 'user',
+          }),
+          layoutData,
+        ).toHtml(),
       );
     })().catch((error) => {
       console.error(error);

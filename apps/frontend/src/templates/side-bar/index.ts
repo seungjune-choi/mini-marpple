@@ -1,1 +1,1 @@
-export * from './side-bar.template';
+export * from './side-bar';

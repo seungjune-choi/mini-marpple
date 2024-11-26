@@ -1,7 +1,7 @@
 import { CustomEventWithDetail, html, on, View } from 'rune-ts';
 import style from './product-image.module.scss';
-import { Carousel } from '../../components/carousel';
 import { forEach, map, pipe } from '@fxts/core';
+import { Carousel } from '../../../components/carousel';
 
 export class RepresentativeSelected extends CustomEventWithDetail<{ id: number | string }> {}
 export class RepresentativeChangedEvent extends CustomEventWithDetail<{

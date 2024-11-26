@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { forEach, pipe } from '@fxts/core';
+
 type Target = string | symbol;
 
 export class BindModel<T extends Record<Target, any>> {
@@ -33,11 +35,13 @@ export class BindModel<T extends Record<Target, any>> {
       return;
     }
 
-    for (const listener of this._listeners.get(target)!) {
-      listener(value);
-    }
+    pipe(
+      this._listeners.get(target)!,
+      forEach((listener) => listener(value)),
+    );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   validate<K extends keyof T>(key?: K) {
     throw new Error('Not implemented');
   }

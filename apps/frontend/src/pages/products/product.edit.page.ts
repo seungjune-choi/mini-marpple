@@ -1,32 +1,30 @@
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/await-thenable */
-import { html, Page, type Html } from 'rune-ts';
+import { html, View, type Html } from 'rune-ts';
 import type { Product } from '../../model';
 import type { RenderHandlerType } from '../../../../../packages/types/renderHandlerType';
 import { MetaView, type LayoutData } from '@rune-ts/server';
-import { ProductMetadataEditor } from '../../templates/products/product-metadata.editor';
-import { ProductImageEditor } from '../../templates/products';
+import { ProductImageEditor, ProductMetadataEditor } from '../../templates/products';
 import { fx } from '@fxts/core';
 import { Button } from '../../components/button';
 import { fileToFormData } from '../../utils';
 import { fileRepository } from '../../repositories/files/file.repository.impl';
 import { productRepository } from '../../repositories/products';
 import { ProductBindModel } from '../../experimental/product.bind.model';
+import { BasePage, type BasePageProps } from '../base.page';
 
-interface ProductEditPageProps {
+interface ProductEditPageProps extends BasePageProps {
   categories: { id: number; name: string }[];
   product?: Product;
 }
 
-export class ProductEditPage extends Page<ProductEditPageProps> {
+export class ProductEditPage extends BasePage<ProductEditPageProps> {
   private model = new ProductBindModel(this.data.product);
   private productMetadataEditor = new ProductMetadataEditor({
-    categories: this.data.categories,
+    ...this.data,
     model: this.model,
   });
   private productImageEditor = new ProductImageEditor({ model: this.model });
 
-  protected override template(): Html {
+  protected override content(): Html | View {
     return html`
       <div class="container vertical">
         <div class="container horizontal">
@@ -61,7 +59,7 @@ export class ProductEditPage extends Page<ProductEditPageProps> {
 
     if (res) {
       alert('상품이 등록되었습니다.');
-      window.location.href = '/';
+      window.location.href = '/admin/products';
     }
   }
 
@@ -95,22 +93,19 @@ export const AdminProductEditRoute = {
 };
 
 export const productEditRenderHandler: RenderHandlerType<typeof ProductEditPage> = (createPage) => {
-  return (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (req: any, res) => {
     (async () => {
       const layoutData: LayoutData = {
         ...res.locals.layoutData,
       };
 
       const params = req.query;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const categories = (req as any)?.categories;
-
       const product = params.id ? await productRepository.findOne(+params.id, req.headers.cookie) : undefined;
 
       res.send(
         new MetaView(
           createPage({
-            categories,
             product: product && {
               ...product,
               images: [
@@ -126,6 +121,9 @@ export const productEditRenderHandler: RenderHandlerType<typeof ProductEditPage>
                 })),
               ],
             },
+            categories: req.categories,
+            user: req.user,
+            role: 'admin',
           }),
           layoutData,
         ).toHtml(),

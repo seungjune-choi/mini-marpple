@@ -1,44 +1,27 @@
-import type { Product, ProductBrief } from '../../model';
-import { AdminProductList } from '../../templates/products';
+import type { ProductBrief } from '../../model';
 import { productRepository } from '../../repositories/products';
 import { MetaView } from '@rune-ts/server';
-import { fx } from '@fxts/core';
-import { BindModel } from '../../experimental';
-import { AdminProductCard } from '../../templates/products/admin.product.card';
 import { BasePage, type BasePageProps } from '../base.page';
+import { AdminProductListView } from '../../templates/products/list-view/admin.product.list.view';
+import { CursorPaginationContainer } from '../../components/pagination-container';
+import type { View } from 'rune-ts';
 
-interface AdminProductListPageProps extends BasePageProps {
+export interface AdminProductListPageProps extends BasePageProps {
   items: ProductBrief[];
   cursor: number;
   categoryId?: number;
 }
 
 export class AdminProductListPage extends BasePage<AdminProductListPageProps> {
-  private productListTemplate = new AdminProductList({
-    items: fx(this.data.items).map(this.createCard.bind(this)).toArray(),
-    categoryId: this.data.categoryId,
-    cursor: this.data.cursor,
-  });
-
-  override content() {
-    return this.productListTemplate;
-  }
-
-  private createCard(product: ProductBrief) {
-    return new AdminProductCard({
-      model: new BindModel<Partial<Product>>({
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        images: [
-          {
-            id: product.representativeImage.id,
-            src: product.representativeImage.url,
-            isRepresentative: true,
-          },
-        ],
-      }),
+  override content(): View {
+    return new CursorPaginationContainer({
+      cursor: this.data.cursor,
+      listView: new AdminProductListView({ items: this.data.items }),
+      next: (args: { cursor: number }) =>
+        productRepository.findAll({
+          cursor: args.cursor,
+          categoryId: this.data.categoryId,
+        }),
     });
   }
 }
@@ -65,6 +48,7 @@ export const adminProductListRenderHandler = (createCurrentPage) => {
             cursor: products.cursor,
             categories: req.categories,
             user: req.user,
+            role: 'admin',
           }),
           layoutData,
         ).toHtml(),

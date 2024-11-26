@@ -1,25 +1,28 @@
-import { Page, html } from 'rune-ts';
-import type { CursorBasedPaginationResponse, ProductBrief } from '../../model';
-import { Header, type HeaderProps } from '../../templates/header';
-import { ProductListTemplate } from '../../templates/products';
-import { SideBar, type SideBarProps } from '../../templates/side-bar';
+import { View } from 'rune-ts';
+import type { ProductBrief } from '../../model';
 import { productRepository } from '../../repositories/products';
 import { MetaView } from '@rune-ts/server';
+import { BasePage, type BasePageProps } from '../base.page';
+import { CursorPaginationContainer } from '../../components/pagination-container';
+import { CustomerProductListView } from '../../templates/products';
 
-interface ProductListPageProps extends HeaderProps, SideBarProps {
-  products: CursorBasedPaginationResponse<ProductBrief>;
+interface ProductListPageProps extends BasePageProps {
+  items: ProductBrief[];
+  cursor: number;
+  categoryId?: number;
 }
 
-export class ProductListPage extends Page<ProductListPageProps> {
-  private header = new Header({ ...this.data });
-  private sideBar = new SideBar({ ...this.data });
-  private productListTemplate = new ProductListTemplate(this.data.products);
-
-  override template() {
-    return html` <div>
-      ${this.header} ${this.sideBar}
-      <div class="content">${this.productListTemplate}</div>
-    </div>`;
+export class ProductListPage extends BasePage<ProductListPageProps> {
+  protected override content(): View {
+    return new CursorPaginationContainer({
+      cursor: this.data.cursor,
+      listView: new CustomerProductListView({ items: this.data.items }),
+      next: (args: { cursor: number }) =>
+        productRepository.findAll({
+          cursor: args.cursor,
+          categoryId: this.data.categoryId,
+        }),
+    });
   }
 }
 
@@ -35,13 +38,12 @@ export const productListRenderHandler = (createCurrentPage) => {
       };
       const query = req.query;
       const categories = req.categories;
-      const isSigned = req.isSigned;
       const user = req.user;
-      const products = await productRepository.findAll({
+      const { items, cursor } = await productRepository.findAll({
         categoryId: query.categoryId,
       });
 
-      res.send(new MetaView(createCurrentPage({ products, isSigned, categories, user }), layoutData).toHtml());
+      res.send(new MetaView(createCurrentPage({ items, cursor, categories, user, role: 'user' }), layoutData).toHtml());
     })().catch((error) => {
       console.error(error);
       res.status(500).send('Internal Server Error');

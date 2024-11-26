@@ -63,7 +63,7 @@ export class Header extends View<HeaderProps> {
 
   @on('click', '.location')
   private onButtonClick(e: MouseEvent) {
-    const button = e.target as HTMLElement;
+    const button = e.currentTarget as HTMLElement;
     const location = button.dataset.location;
     if (location) {
       window.location.href = location;

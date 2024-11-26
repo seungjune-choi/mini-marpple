@@ -8,9 +8,10 @@ import { Button } from '../../components/button';
 import { OrderCancelConfirmEvent, OrderCancelModal } from './order.cancel.modal';
 import { paymentRepository } from '../../repositories/payments';
 import { BasePage, type BasePageProps } from '../base.page';
+import type { RenderHandlerType } from '../../../../../packages/types/renderHandlerType';
 
 export interface OrderPageProps extends BasePageProps {
-  orders: OrderDetail[];
+  items: OrderDetail[];
   cursor: number;
 }
 export const statusText = (status: OrderStatus) => {
@@ -34,7 +35,7 @@ export class OrderPage extends BasePage<OrderPageProps> {
     return html`
       <div class="${style['order-list']}">
         ${pipe(
-          this.data.orders,
+          this.data.items,
           map(
             (o) => html`
               <div class="${style['order-card']}">
@@ -119,18 +120,19 @@ export const OrderRoute = {
   '/orders': OrderPage,
 };
 
-export const orderRenderHandler = (createCurrentPage) => {
-  return (req, res) => {
+export const orderRenderHandler: RenderHandlerType<typeof OrderPage> = (createCurrentPage) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (req: any, res) => {
     (async () => {
       const layoutData = {
         ...res.locals.layoutData,
       };
-      const categories = req.categories;
-      const isSigned = req.isSigned;
-      const user = req.user;
       const { items, cursor } = await orderRepository.findMany({}, req.headers.cookie);
       res.send(
-        new MetaView(createCurrentPage({ orders: items, cursor, isSigned, categories, user }), layoutData).toHtml(),
+        new MetaView(
+          createCurrentPage({ items, cursor, categories: req.categories, user: req.user, role: 'user' }),
+          layoutData,
+        ).toHtml(),
       );
     })().catch((error) => {
       console.error(error);
