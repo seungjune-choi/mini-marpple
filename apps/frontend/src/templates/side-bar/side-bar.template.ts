@@ -1,7 +1,6 @@
 import { html, on, View, type Html } from 'rune-ts';
 import style from './side-bar.module.scss';
 import type { TargetUser } from '../../model';
-import { AfterSignInEvent } from '../sign-in/sign-in.form';
 
 export interface SideBarProps {
   user: TargetUser | null;
@@ -26,7 +25,7 @@ export class SideBar extends View<SideBarProps> {
             )}
           </ul>
         </nav>
-        ${this.data.user ? this.adminMenu() : ''}
+        ${this.data.user?.isAdmin ? this.adminMenu() : ''}
       </div>
     `;
   }
@@ -44,13 +43,6 @@ export class SideBar extends View<SideBarProps> {
     const target = event.target as HTMLElement;
     const link = target.querySelector('a')!;
     window.location.href = link.href;
-  }
-
-  @on(AfterSignInEvent)
-  handleAfterSignIn(event: AfterSignInEvent) {
-    console.log('side-bar', event.detail);
-    this.data.user = event.detail;
-    this.redraw();
   }
 
   rerender(props: SideBarProps) {

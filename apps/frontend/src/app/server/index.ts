@@ -12,20 +12,23 @@ import { categoryMiddleware } from './middlewares/category.middleware';
 import { sessionMiddleware } from './middlewares/session.middleware';
 import { orderRenderHandler } from '../../pages/orders';
 import { mainRenderHandler } from '../../pages/main';
+import { adminMiddleware } from './middlewares/admin.guard';
 const server = app();
 
 server.use(sessionMiddleware);
 server.use(categoryMiddleware);
 server.use(faviconInterceptor);
+server.use('/admin', adminMiddleware);
 
 server.get(ClientRouter['/'].toString(), await mainRenderHandler(ClientRouter['/']));
-
 server.get(ClientRouter['/carts'].toString(), await cartRenderHandler(ClientRouter['/carts']));
 
-server.get(ClientRouter['/product-edit'].toString(), await productEditRenderHandler(ClientRouter['/product-edit']));
-
 server.get(ClientRouter['/products'].toString(), productListRenderHandler(ClientRouter['/products']));
-
-server.get(ClientRouter['/admin/products'].toString(), adminProductListRenderHandler(ClientRouter['/admin/products']));
-
 server.get(ClientRouter['/orders'].toString(), orderRenderHandler(ClientRouter['/orders']));
+
+// admin
+server.get(ClientRouter['/admin/products'].toString(), adminProductListRenderHandler(ClientRouter['/admin/products']));
+server.get(
+  ClientRouter['/admin/product-edit'].toString(),
+  await productEditRenderHandler(ClientRouter['/admin/product-edit']),
+);

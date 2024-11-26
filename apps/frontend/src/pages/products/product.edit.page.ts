@@ -90,8 +90,8 @@ export class ProductEditPage extends Page<ProductEditPageProps> {
   }
 }
 
-export const ProductEditRoute = {
-  '/product-edit': ProductEditPage,
+export const AdminProductEditRoute = {
+  '/admin/product-edit': ProductEditPage,
 };
 
 export const productEditRenderHandler: RenderHandlerType<typeof ProductEditPage> = (createPage) => {

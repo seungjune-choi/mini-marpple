@@ -8,6 +8,6 @@ export class AdminProductCard extends BaseProductCard {
 
   @on('click')
   handleCardClick(e) {
-    window.location.href = `/product-edit?id=${e.currentTarget.dataset.id}`;
+    window.location.href = `/admin/product-edit?id=${e.currentTarget.dataset.id}`;
   }
 }

@@ -15,8 +15,7 @@ export class UserRepository implements IUserRepository {
     return baseClient
       .get<ResponseEntity<TargetUser>>('/users/v1/me', { ...((cookie && { headers: { Cookie: cookie } }) ?? {}) })
       .then((res) => res.data.data)
-      .catch((e) => {
-        console.error(e);
+      .catch(() => {
         return null;
       });
   }
