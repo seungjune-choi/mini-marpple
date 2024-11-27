@@ -43,7 +43,12 @@ export const productListRenderHandler = (createCurrentPage) => {
         categoryId: query.categoryId,
       });
 
-      res.send(new MetaView(createCurrentPage({ items, cursor, categories, user, role: 'user' }), layoutData).toHtml());
+      res.send(
+        new MetaView(
+          createCurrentPage({ items, cursor, categories, categoryId: query.categoryId, user, role: 'user' }),
+          layoutData,
+        ).toHtml(),
+      );
     })().catch((error) => {
       console.error(error);
       res.status(500).send('Internal Server Error');

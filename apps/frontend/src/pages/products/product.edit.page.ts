@@ -42,7 +42,7 @@ export class ProductEditPage extends BasePage<ProductEditPageProps> {
   // TODO: 에러 핸들링 추가할 것
   private async handleEdit() {
     // TODO 에러 메시지 처리
-    if (!this.model.validate().success) {
+    if (!this.model.validate()) {
       alert('입력값을 확인해주세요.');
       return;
     }

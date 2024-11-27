@@ -17,14 +17,14 @@ export class ProductMetadataEditor extends View<ProductMetadataTemplateProps> {
       name: 'name',
       label: '상품명',
       value: this.data.model.value.name,
-      validate: () => this.data.model.validate('name').success,
+      validate: () => this.data.model.validate('name'),
       errorMessages: `2자 이상 100자 이하만 입력 가능합니다.`,
     }),
     description: new Input({
       name: 'description',
       label: '상품 설명',
       value: this.data.model.value.description,
-      validate: () => this.data.model.validate('description').success,
+      validate: () => this.data.model.validate('description'),
       errorMessages: '2자 이상 1000자 이하만 입력 가능합니다.',
     }),
     price: new Input({
@@ -32,7 +32,7 @@ export class ProductMetadataEditor extends View<ProductMetadataTemplateProps> {
       label: '가격',
       type: 'number',
       value: this.data.model.value.price?.toString(),
-      validate: () => this.data.model.validate('price').success,
+      validate: () => this.data.model.validate('price'),
       errorMessages: '1000원 이상 100만원 이하만 입력 가능합니다.',
     }),
     stockQuantity: new Input({
@@ -40,8 +40,8 @@ export class ProductMetadataEditor extends View<ProductMetadataTemplateProps> {
       label: '재고 수량',
       type: 'number',
       value: this.data.model.value.stockQuantity?.toString(),
-      validate: () => this.data.model.validate('stockQuantity').success,
-      errorMessages: '0 이상 1000 이하만 입력 가능합니다.',
+      validate: () => this.data.model.validate('stockQuantity'),
+      errorMessages: '1 이상 1000 이하만 입력 가능합니다.',
     }),
     hidden: new SwitchView({ on: this.data.model?.value?.hidden ?? false }),
   };

@@ -47,6 +47,7 @@ export const adminProductListRenderHandler = (createCurrentPage) => {
             items: products.items,
             cursor: products.cursor,
             categories: req.categories,
+            categoryId: query.categoryId,
             user: req.user,
             role: 'admin',
           }),
