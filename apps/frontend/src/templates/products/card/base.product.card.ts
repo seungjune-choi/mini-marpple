@@ -5,6 +5,8 @@ import { Card } from '../../../components/card';
 import { readFile } from '../../../utils';
 import style from './product.card.module.scss';
 
+export class ProductCardClickedEvent extends CustomEventWithDetail<{ productId: number }> {}
+
 export class AddCartEvent extends CustomEventWithDetail<{ productId: number }> {}
 
 export interface BaseProductCardProps {
@@ -41,8 +43,18 @@ export class BaseProductCard<T extends BaseProductCardProps = BaseProductCardPro
   @on('click', `.${style['cart-button']}`)
   private handleAddCart() {
     if (!this.data.enableCartButton) return;
+    // Q. 이벤트 전파를 막는 방법?
+    // e.preventDefault();
+    this.dispatchEvent(AddCartEvent, { bubbles: false, detail: { productId: this.data.model.value.id! } });
+  }
 
-    this.dispatchEvent(AddCartEvent, { bubbles: true, detail: { productId: this.data.model.value.id! } });
+  @on('click')
+  private handleClick(e: Event) {
+    if (e.target === this.element().querySelector(`.${style['cart-button']}`)) return;
+    this.dispatchEvent(ProductCardClickedEvent, {
+      bubbles: true,
+      detail: { productId: this.data.model.value.id! },
+    });
   }
 
   protected override onRender(): void {

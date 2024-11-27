@@ -12,7 +12,11 @@ export const Cacheable = (options?: CacheableOptions): MethodDecorator => {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {
-      const cacheKey = options?.key ? (typeof options.key === 'string' ? `${KEY_PREFIX}${options.key}` : `${KEY_PREFIX}${options.key(args)}`) : `${KEY_PREFIX}${propertyKey.toString()}:${JSON.stringify(args)}`;
+      const cacheKey = options?.key
+        ? typeof options.key === 'string'
+          ? `${KEY_PREFIX}${options.key}`
+          : `${KEY_PREFIX}${options.key(args)}`
+        : `${KEY_PREFIX}${propertyKey.toString()}:${JSON.stringify(args)}`;
       const cachedValue = await redisClient.get(cacheKey);
 
       if (cachedValue) {

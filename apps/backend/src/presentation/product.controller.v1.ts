@@ -14,7 +14,7 @@ export class ProductControllerV1 {
     private readonly productImageService: ProductImageService,
   ) {}
 
-  @UseMiddleware([AuthGuard, AdminMiddleware])
+  @UseMiddleware([AuthGuard])
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return await this.productService

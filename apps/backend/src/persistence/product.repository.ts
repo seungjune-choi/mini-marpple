@@ -79,6 +79,7 @@ export class ProductRepository {
           1 = 1
         ${categoryId ? this.dataSource.$sql`AND category_id = ${categoryId}` : this.dataSource.$sql``}
         ${cursor ? this.dataSource.$sql`AND id < ${cursor}` : this.dataSource.$sql``}
+          AND stock_quantity > 0
         ORDER BY
           id DESC
         LIMIT 

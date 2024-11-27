@@ -131,3 +131,24 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_representative_thumbnail ON product_images
 
 -- 카테고리로 상품을 조회하기 위한 인덱스 추가
 CREATE INDEX IF NOT EXISTS idx_category_id ON products (category_id);
+
+-- Orders 테이블의 user_id 컬럼에 외래 키 설정
+ALTER TABLE orders
+ADD CONSTRAINT fk_orders_user_id
+FOREIGN KEY (user_id)
+REFERENCES users (id)
+ON DELETE CASCADE;
+
+-- Payments 테이블의 user_id 컬럼에 외래 키 설정
+ALTER TABLE payments
+ADD CONSTRAINT fk_payments_user_id
+FOREIGN KEY (user_id)
+REFERENCES users (id)
+ON DELETE CASCADE;
+
+-- Carts 테이블의 user_id 컬럼에 외래 키 설정
+ALTER TABLE carts
+ADD CONSTRAINT fk_carts_user_id
+FOREIGN KEY (user_id)
+REFERENCES users (id)
+ON DELETE CASCADE;

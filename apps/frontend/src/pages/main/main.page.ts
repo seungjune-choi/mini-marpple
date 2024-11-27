@@ -1,11 +1,13 @@
-import { View, type Html } from 'rune-ts';
+import { html, on, View, type Html } from 'rune-ts';
 import type { RenderHandlerType } from '../../../../../packages/types/renderHandlerType';
 import { type LayoutData, MetaView } from '@rune-ts/server';
 import { productRepository } from '../../repositories/products';
 import type { ProductBrief } from '../../model';
 import { BasePage, type BasePageProps } from '../base.page';
 import { CursorPaginationContainer } from '../../components/pagination-container';
-import { CustomerProductListView } from '../../templates/products';
+import { CustomerProductListView, ProductCardClickedEvent } from '../../templates/products';
+import { ProductDetailModal } from '../../templates/products/product-detail.modal';
+import { BindModel } from '../../experimental';
 
 interface MainPageProps extends BasePageProps {
   items: ProductBrief[];
@@ -14,18 +16,44 @@ interface MainPageProps extends BasePageProps {
 }
 
 export class MainPage extends BasePage<MainPageProps> {
-  // private productListTemplate = new ProductList(this.data.products);
-
+  private detailModal = new ProductDetailModal({});
   protected override content(): Html | View {
-    return new CursorPaginationContainer({
-      cursor: this.data.cursor,
-      listView: new CustomerProductListView({ items: this.data.items }),
-      next: (args: { cursor: number }) =>
-        productRepository.findAll({
-          cursor: args.cursor,
-          categoryId: this.data.categoryId,
-        }),
-    });
+    return html`<div>
+      ${new CursorPaginationContainer({
+        cursor: this.data.cursor,
+        listView: new CustomerProductListView({ items: this.data.items }),
+        next: (args: { cursor: number }) =>
+          productRepository.findAll({
+            cursor: args.cursor,
+            categoryId: this.data.categoryId,
+          }),
+      })}
+      ${this.detailModal}
+    </div> `;
+  }
+
+  @on(ProductCardClickedEvent)
+  private async handleProductCardClicked(event: ProductCardClickedEvent) {
+    const { productId } = event.detail;
+    const target = await productRepository.findOne(productId);
+    this.detailModal.setProduct(
+      new BindModel({
+        ...target,
+        images: [
+          {
+            id: target.representativeImage?.id,
+            src: target.representativeImage?.src,
+            isRepresentative: true,
+          },
+          ...target.optionalImages.map((img) => ({
+            id: img.id,
+            src: img.src,
+            isRepresentative: false,
+          })),
+        ],
+      }),
+    );
+    this.detailModal.open();
   }
 }
 

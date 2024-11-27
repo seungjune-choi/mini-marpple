@@ -46,14 +46,16 @@ export class SideBar extends View<SideBarProps> {
   }
 
   private adminMenu() {
-    console.log('isAdmin', this.isAdmin());
     if (!this.isAdmin()) {
       return '';
     }
 
     return html`
       <div class="${style['bottom-menu']}">
-        <a href="/admin/products">Edit product</a>
+        <ul>
+          <li><a href="/admin/products">상품 관리 목록</a></li>
+          <li><a href="/admin/product-edit">상품 추가</a></li>
+        </ul>
       </div>
     `;
   }

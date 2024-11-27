@@ -1,8 +1,8 @@
-import { View, html, on } from 'rune-ts';
+import { View, html, on, type Html } from 'rune-ts';
 import style from './carousel.module.scss';
 
 interface CarouselProps<T extends View<{ id: number | string }>> {
-  children: T[];
+  children: T[] | Html[];
   autoPlay?: boolean;
   interval?: number;
 }
