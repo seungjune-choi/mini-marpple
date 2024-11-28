@@ -14,7 +14,7 @@ export class OrderControllerV1 {
     private readonly cartService: CartService,
   ) {}
 
-  @UseMiddleware(AuthGuard)
+  @UseMiddleware([AuthGuard])
   @Get()
   public async findMany(
     @User() targetUser: TargetUser,
@@ -33,7 +33,7 @@ export class OrderControllerV1 {
       .then((res) => ResponseEntity.ok(FindManyOrderResponse.from(res, limit)));
   }
 
-  @UseMiddleware(AuthGuard)
+  @UseMiddleware([AuthGuard])
   @Post('/carts/:cartId')
   public async createFromCart(@User() targetUser: TargetUser, @Param('cartId') cartId: string) {
     const cart = await this.cartService.findOne(targetUser.id);

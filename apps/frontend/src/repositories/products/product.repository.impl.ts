@@ -21,6 +21,7 @@ export class ProductRepository implements IProductRepository {
     categoryId?: number;
   }): Promise<CursorBasedPaginationResponse<ProductBrief>> {
     return baseClient.get(this.#baseUrl, { params: query }).then((response) => {
+      console.log(response.data);
       return response.data.data;
     });
   }

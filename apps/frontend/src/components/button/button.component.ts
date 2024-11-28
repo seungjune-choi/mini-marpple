@@ -21,7 +21,7 @@ export class Button<T extends ButtonProps = ButtonProps> extends View<T> {
         id="${this.data.id ?? ''}"
         class="${style.button} ${style[this.data.color ?? 'primary']} ${style[this.data.variant ?? 'outlined']} ${style[
           this.data.size ?? 'medium'
-        ]} "
+        ]}"
         type="${this.data.type ?? 'button'}"
       >
         ${this.data.name}

@@ -7,6 +7,18 @@ interface CacheableOptions {
 
 const KEY_PREFIX = 'cacheable:';
 
+/**
+ * @example
+ *
+ * ```ts
+ * class Example {
+ *  @Cacheable ({ key: 'example', ttl: 60 })
+ *  async exampleMethod() {
+ *   return 'example';
+ *  }
+ * }
+ * ```
+ */
 export const Cacheable = (options?: CacheableOptions): MethodDecorator => {
   return (_, propertyKey, descriptor: any) => {
     const originalMethod = descriptor.value;

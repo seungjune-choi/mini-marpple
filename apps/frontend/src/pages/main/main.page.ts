@@ -24,6 +24,7 @@ export class MainPage extends BasePage<MainPageProps> {
         listView: new CustomerProductListView({ items: this.data.items }),
         next: (args: { cursor: number }) =>
           productRepository.findAll({
+            limit: 3,
             cursor: args.cursor,
             categoryId: this.data.categoryId,
           }),
@@ -69,7 +70,7 @@ export const mainRenderHandler: RenderHandlerType<typeof MainPage> = (createCurr
         ...res.locals.layoutData,
       };
 
-      const { items, cursor } = await productRepository.findAll({});
+      const { items, cursor } = await productRepository.findAll({ limit: 3 });
 
       res.send(
         new MetaView(

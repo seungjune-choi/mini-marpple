@@ -35,16 +35,16 @@ export class BaseProductCard<T extends BaseProductCardProps = BaseProductCardPro
           : ''}
         <div id="name" class="${style.name}">${this.data.model.value?.name ?? ''}</div>
         <div id="description" class="${style.description}">${this.data.model.value?.description ?? ''}</div>
-        <div id="price" class="${style.price}">${this.data.model.value?.price ?? ''} 원</div>
+        <div id="price" class="${style.price}">${this.data.model.value?.price?.toLocaleString('ko-KR') ?? ''} 원</div>
       </div> `,
     })}`;
   }
 
   @on('click', `.${style['cart-button']}`)
-  private handleAddCart() {
+  private handleAddCart(e) {
     if (!this.data.enableCartButton) return;
     // Q. 이벤트 전파를 막는 방법?
-    // e.preventDefault();
+    e.o;
     this.dispatchEvent(AddCartEvent, { bubbles: false, detail: { productId: this.data.model.value.id! } });
   }
 
@@ -73,5 +73,8 @@ export class BaseProductCard<T extends BaseProductCardProps = BaseProductCardPro
           : await readFile(representativeImage!.src);
       this.element().querySelector('img')!.src = imageSrc as string;
     });
+    // this.delegate('click', `.${style['cart-button']}`, (e) => {
+    //   e.preventDefault();
+    // });
   }
 }

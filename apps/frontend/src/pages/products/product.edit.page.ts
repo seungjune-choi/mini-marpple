@@ -86,6 +86,10 @@ export class ProductEditPage extends BasePage<ProductEditPageProps> {
           ),
       );
   }
+
+  protected override onRender(): void {
+    this.model.bind('name', console.log);
+  }
 }
 
 export const AdminProductEditRoute = {
